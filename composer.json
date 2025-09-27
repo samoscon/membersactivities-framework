@@ -1,7 +1,6 @@
 {
-  "name": "samoscon/oratorium",
+  "name": "samoscon/membersactivities-framework",
   "description": "MVC Framework to manage Members, Activities and Subscriptions in a ticketingsystem",
-  "tag": "v1.0.0",
   "keywords": [
     "members",
     "payments",
@@ -10,7 +9,7 @@
     "subscriptions"
   ],
   "homepage": "https://ticketingsystem.link",
-  "license": "BSD-2-Clause",
+  "license": "proprietary",
   "authors": [
     {
       "name": "Dirk Van Meirvenne",
@@ -18,7 +17,7 @@
     }
   ],
     "require": {
-        "symfony/mailer": "^7.0",
+        "samoscon/controller-framework": "^1.0",
         "mollie/mollie-api-php": "^2.0"
     }
 }
