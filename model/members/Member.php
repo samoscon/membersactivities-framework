@@ -140,6 +140,6 @@ abstract class Member extends \db\DomainObject {
                 $total += $payment->amount;
             }
         }
+        return $total;
     }
-    return $total;
 }
