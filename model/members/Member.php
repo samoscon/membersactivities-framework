@@ -117,4 +117,29 @@ abstract class Member extends \db\DomainObject {
     protected function getMembershipFee(): float {
         return $this->membertypeimplementation->getMembershipFee($this);
     }    
+    
+    /**
+     * Returns true if the current date >= duedate of the Activity
+     * 
+     * @return boolean
+     */
+    public function subscriptionPeriodOver(): bool {
+        $duedate = date('Y-m-d', strtotime(str_replace("/", "-", $this->duedate)));
+        return $duedate < date('Y-m-d');
+    }
+    
+    /**
+     * Returns the effective paid amount for this Member or MemberComposite
+     * 
+     * @return float Returns an array with a subject and a body
+     */
+    public function getTotalAmountReceived(): float {
+        $total = 0;
+        foreach ($this->payments as $payment) {
+            if ($payment->status === 'paid') {
+                $total += $payment->amount;
+            }
+        }
+    }
+    return $total;
 }
