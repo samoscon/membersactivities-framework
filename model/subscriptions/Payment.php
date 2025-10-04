@@ -43,6 +43,19 @@ abstract class Payment extends \db\DomainObject {
         return $payment;
     }
     
+    #[\Override]
+    /**
+     * Update an object in the database through the respective mapper of the calling class
+     * 
+     */
+    public function delete(): void {
+        //delete first all related subscriptions
+        foreach (\model\Subscription::findAll('WHERE payment_id = '.$this->getId()) as $subscription) {
+            $subscription->delete();
+        }
+        self::mapper()->delete($this);
+    }
+
     /**
      * Returns true when Payment has status 'paid'
      * 
