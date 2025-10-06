@@ -58,9 +58,10 @@ abstract class ActivityMapper extends \db\Mapper {
      * Returns the subscribed members of the Activity $obj
      * 
      * @param \model\Activity $obj
+     * @param \db\ObjectMap $participants
      * @return \db\ObjectMap of \members\Member
      */
-    public function getParticipants(\model\Activity $obj) {
+    public function getParticipants(\model\activities\Activity $obj, \db\ObjectMap $participants) {
         $sql = $this->db->prepare("SELECT DISTINCT member.id, name, lastname "
             . "FROM member, subscription, costitem "
             . "WHERE member.id = subscription.member_id AND subscription.`costItem_id` = costitem.id "
@@ -69,7 +70,6 @@ abstract class ActivityMapper extends \db\Mapper {
         $result = $sql->fetchAll();
         $sql->closeCursor();
 
-        $participants = new \db\ObjectMap();
         foreach ($result as $row) {
             $member = \model\Member::find($row['id']);
             $participants->attach($member, $row['id']);
