@@ -70,10 +70,8 @@ abstract class ActivityMapper extends \db\Mapper {
         $sql->closeCursor();
 
         $participants = new \db\ObjectMap();
-        $reg = \registry\Registry::instance();
-        $memberMapper = $reg->getMemberMapper();
         foreach ($result as $row) {
-            $member = $memberMapper->find($row['id']);
+            $member = \model\Member::find($row['id']);
             $participants->attach($member, $row['id']);
         }
         return $participants;
