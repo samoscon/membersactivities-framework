@@ -57,7 +57,12 @@ abstract class Activity extends \db\DomainObject {
      * @return ObjectMap of \members\Member
      */
     public function getParticipants(): \db\ObjectMap {
-        return self::mapper()->getParticipants($this);
+        if ($this->parent) {
+            $results = $this->parent->getParticipants();
+        } else {
+            $results = new \db\ObjectMap();
+        }
+        return self::mapper()->getParticipants($this, $results);
     }
     
     /**
