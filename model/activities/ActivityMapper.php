@@ -62,16 +62,18 @@ abstract class ActivityMapper extends \db\Mapper {
      * @return \db\ObjectMap of \members\Member
      */
     public function getParticipants(\model\activities\Activity $obj, \db\ObjectMap $participants) {
-        $sql = $this->db->prepare("SELECT DISTINCT member.id, name, lastname "
-            . "FROM member, subscription, costitem "
+        $sql = $this->db->prepare("SELECT DISTINCT member.id, name, email, costitem.description AS costitemdescription, quantity "
+            . "FROM member, subscription, costitem, payment "
             . "WHERE member.id = subscription.member_id AND subscription.`costItem_id` = costitem.id "
-            . "AND costitem.activity_id = ? ORDER BY member.name, member.lastname");
+            . "AND costitem.activity_id = ? AND status = 'paid' ORDER BY member.name, member.lastname");
         $sql->execute([$obj->getId()]);
         $result = $sql->fetchAll();
         $sql->closeCursor();
 
         foreach ($result as $row) {
             $member = \model\Member::find($row['id']);
+            $member->costitem = $row['costitemdescription'];
+            $member->quantity = $row['quantity'];
             $participants->attach($member, $row['id']);
         }
         return $participants;
