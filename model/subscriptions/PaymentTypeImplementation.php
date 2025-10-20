@@ -18,5 +18,23 @@ namespace model\subscriptions;
  */
 abstract class PaymentTypeImplementation {
     
+    protected function initiateGoogleWalletTickets(\model\Payment $payment, \model\activities\Activity $activity): void {
+        if($activity->isComposite()) {
+            return;
+        }
+        foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
+            for($i = 0; $i < $subscription->quantity; $i++) {
+                (new \model\GoogleWalletTicket())->createObject($subscription->getId(), $activity->getId(), $i+1);
+                (new \model\GoogleWalletTicket())->updateObject($subscription, $i+1);
+            }
+        }        
+    }
+        
+    protected function getSubscription(\model\Payment $payment): \model\Subscription {
+        foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
+            return $subscription;
+        }        
+    }
+
     abstract public function statusReceived(\model\Payment $payment, string $status): void;
 }
