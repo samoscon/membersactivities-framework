@@ -178,9 +178,9 @@ abstract class GoogleWalletTicket {
             $updatedClass = $this->service->eventticketclass->get("{$issuerId}.{$classSuffix}");
         } catch (\Google\Service\Exception $ex) {
             if (!empty($ex->getErrors()) && $ex->getErrors()[0]['reason'] == 'classNotFound') {
-                // Class does not exist
-                print("Class {$issuerId}.{$classSuffix} not found!");
-                return;
+                // Class does not exist yet
+                $this->createClass($activity->getId(), $activity->description);
+                $updatedClass = $this->service->eventticketclass->get("{$issuerId}.{$classSuffix}");
             } else {
                 // Something else went wrong...
                 print_r($ex);
