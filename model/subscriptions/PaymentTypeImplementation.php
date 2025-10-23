@@ -30,7 +30,7 @@ abstract class PaymentTypeImplementation {
         }        
     }
         
-    protected function getSubscription(\model\Payment $payment): \model\Subscription {
+    public function getSubscription(\model\Payment $payment): \model\Subscription {
         foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
             return $subscription;
         }        
