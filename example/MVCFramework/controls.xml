@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<control>
+
+    <!-- paths in the login procedure -->
+    <command path="/" class="\commands\DefaultCommand">
+        <view name="/defaultView" />
+        <status value="CMD_CHANGE_PASSWORD">
+            <forward path="/changePassword" />
+        </status>
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/activity" />
+        </status>
+        <status value="CMD_ADMIN">
+            <forward path="/admin" />
+        </status>
+    </command>
+    
+    <command path="/initiatePassword" class="\commands\login\InitiatePasswordCommand">
+        <view name="/login/initiatepasswordView" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/confirmPassword" />
+        </status>
+    </command>
+
+    <command path="/confirmPassword" class="\commands\login\ConfirmPasswordCommand">
+        <view name="/confirmView" />
+        <status value="CMD_OK">
+            <forward path="/" />
+        </status>
+    </command>
+
+    <command path="/changePassword" class="\commands\login\ChangePasswordCommand">
+        <view name="/login/changepasswordView" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/" />
+        </status>
+        <status value="CMD_ADMIN">
+            <forward path="/admin" />
+        </status>
+    </command>
+
+    <command path="/logout" class="\commands\login\LogoutCommand">
+        <view name="/confirmView" />
+        <status value="CMD_OK">
+            <forward path="/" />
+        </status>
+    </command>
+
+    <!-- paths in the member website -->
+    <command path="/activity" class="\commands\user\ActivityCommand">
+        <view name="/user/activity" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/createPayment" />
+        </status>
+        <status value="CMD_ADMIN">
+            <forward path="/paymentConfirmation" />
+        </status>
+    </command>
+
+    <command path="/createPayment" class="\commands\user\CreatePaymentCommand">
+        <view name="/user/createPayment" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/paymentToMollie" />
+        </status>
+        <status value="CMD_CONTINUE">
+            <forward path="/wireConfirmation" />
+        </status>
+    </command>
+
+    <command path="/paymentToMollie" 
+             class="\commands\mollie\PaymentToMollieCommand">
+        <datarequest type="Mollie" />
+    </command>
+    
+    <command path="/webhookFromMollie" 
+             class="\commands\datarequest\mollie\WebhookFromMollieCommand">
+        <datarequest type="NoRender" />
+    </command>
+    
+    <command path="/wireConfirmation" class="\commands\publicpage\JustShowViewCommand">
+        <view name="/user/wireConfirmView" />
+    </command>
+
+    <command path="/paymentConfirmation" class="\commands\user\PaymentConfirmationCommand">
+        <view name="/user/paymentConfirmView" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+    </command>
+
+    <command path="/pdfTickets" class="\commands\downloads\DownloadPdfTicketsCommand">
+        <datarequest type="NoRender" />
+    </command>
+   
+    <!-- paths in the admin website -->
+    <command path="/admin" class="\commands\admin\AdminHomeCommand">
+        <view name="/admin/adminhome" />
+        <status value="CMD_OK">
+            <forward path="/createMember" />
+        </status>
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+    </command>
+
+    <command path="/createActivity" class="\commands\admin\CreateActivityCommand">
+        <view name="/admin/createActivity" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/admin" />
+        </status>
+    </command>
+
+    <command path="/editActivity" class="\commands\admin\EditActivityCommand">
+        <view name="/admin/editActivity" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/addActivityToComposite" class="\commands\viewrender\admin\AddActivityToCompositeCommand">
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/removeActivityFromComposite" class="\commands\viewrender\admin\RemoveActivityFromCompositeCommand">
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/deleteActivity" class="\commands\viewrender\admin\DeleteActivityCommand">
+        <view name="/admin/deleteActivity" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/admin" />
+        </status>
+    </command>
+
+    <command path="/createCostitem" class="\commands\viewrender\admin\CreateCostitemCommand">
+        <view name="/admin/createCostitem" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/editCostitem" class="\commands\admin\EditCostitemCommand">
+        <view name="/admin/editCostitem" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/deleteCostitem" class="\commands\viewrender\admin\DeleteCostitemCommand">
+        <view name="/admin/deleteCostitem" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editActivity" />
+        </status>
+    </command>
+
+    <command path="/createMember" class="\commands\viewrender\admin\CreateMemberCommand">
+        <view name="/admin/createMember" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/admin" />
+        </status>
+    </command>
+
+    <command path="/editMember" class="\commands\admin\EditMemberCommand">
+        <view name="/admin/editMember" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/searchMembers" />
+        </status>
+    </command>
+
+    <command path="/addMemberToComposite" class="\commands\viewrender\admin\AddMemberToCompositeCommand">
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editMember" />
+        </status>
+    </command>
+
+    <command path="/removeMemberFromComposite" class="\commands\viewrender\admin\RemoveMemberFromCompositeCommand">
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editMember" />
+        </status>
+    </command>
+
+    <command path="/deleteMember" class="\commands\viewrender\admin\DeleteMemberCommand">
+        <view name="/admin/deleteMember" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/searchMembers" />
+        </status>
+    </command>
+
+    <command path="/editPayment" class="\commands\admin\EditPaymentCommand">
+        <view name="/admin/editPayment" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editMember" />
+        </status>
+    </command>
+
+    <command path="/deletePayment" class="\commands\viewrender\admin\DeletePaymentCommand">
+        <view name="/admin/deletePayment" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+        <status value="CMD_OK">
+            <forward path="/editMember" />
+        </status>
+    </command>
+
+    <command path="/searchMembers" class="\commands\viewrender\admin\SearchMembersCommand">
+        <view name="/admin/searchMembersView" />
+        <status value="CMD_ERROR">
+            <view name="/errorView" />
+        </status>
+    </command>
+    
+    <!-- paths for reporting/downloads -->
+    <command path="/xlsParticipants" class="\commands\datarequest\downloads\DownloadXlsParticipantsCommand">
+        <datarequest type="Download" />
+    </command>
+    
+    <command path="/xlsMembers" class="\commands\datarequest\downloads\DownloadXlsMembersCommand">
+        <datarequest type="Download" />
+    </command>
+
+</control>
