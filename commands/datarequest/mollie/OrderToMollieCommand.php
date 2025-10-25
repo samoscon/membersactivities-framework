@@ -26,13 +26,16 @@ class OrderToMollieCommand extends \controllers\Command {
     public function doExecute(\registry\Request $request): int {
         try
         {
-             /*
+            require_once("vendor/autoload.php");
+
+            /*
              * Initialize the Mollie API library with your API key.
              *
              * See: https://www.mollie.com/beheer/account/profielen/
              */
-            include _MOLLIECONFIG;
-
+            $mollie = new \Mollie\Api\MollieApiClient();
+            $mollie->setApiKey(_MOLLIECONFIG);
+            
             /*
              * Generate a unique order id. It is important to include this unique attribute
              * in the redirectUrl (below) so a proper return page can be shown to the customer.
