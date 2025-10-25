@@ -7,7 +7,7 @@ Install with "composer require samoscon/membersactivities-framework" in the root
 Copy all the files and folders under the "example" folder to the root folder of your project
   (including the composer.json file. It needs to overwrite the existing composer.json file in your root folder)
 
-Update the app_options.ini file under the config folder with your parameters
+Update the app_options.ini file under the config folder with your parameters and add a Google Wallet key file
 
 Run 'composer update' in your root folder
 
