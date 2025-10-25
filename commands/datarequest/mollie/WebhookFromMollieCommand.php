@@ -26,13 +26,16 @@ class WebhookFromMollieCommand extends \controllers\Command {
     public function doExecute(\registry\Request $request): int {
         try
         {
+            require_once("vendor/autoload.php");
+
             /*
              * Initialize the Mollie API library with your API key.
              *
              * See: https://www.mollie.com/beheer/account/profielen/
              */
-            include _MOLLIECONFIG;
-
+            $mollie = new \Mollie\Api\MollieApiClient();
+            $mollie->setApiKey(_MOLLIECONFIG);
+            
             /*
              * Retrieve the payment's current state.
              */
@@ -49,7 +52,6 @@ class WebhookFromMollieCommand extends \controllers\Command {
         }
         catch (\Mollie\Api\Exceptions\ApiException $e)
         {
-//            echo "API call failed: " . htmlspecialchars($e->getMessage());
             $request->addFeedback("API call to mollie failed: " . htmlspecialchars($e->getMessage()));
             return self::CMD_ERROR;
         }
