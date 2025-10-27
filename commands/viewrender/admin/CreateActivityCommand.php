@@ -41,7 +41,9 @@ class CreateActivityCommand extends \controllers\Command {
 
                 $activity = \model\Activity::insert($properties);
 
-                (new \model\GoogleWalletTicket())->createClass($activity->getId(), $description);
+                if(_WALLETISSUERID) {
+                    (new \model\GoogleWalletTicket())->createClass($activity->getId(), $description);
+                }
                 
                 return self::CMD_OK;
             }
