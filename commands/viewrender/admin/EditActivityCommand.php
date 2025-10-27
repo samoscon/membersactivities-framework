@@ -96,8 +96,10 @@ class EditActivityCommand extends \controllers\Command {
             if (!$dateIsEmpty && !$descriptionIsEmpty && !$duedateIsEmpty && !$startIsEmpty && !$endIsEmpty && !$locationIsEmpty) {
                 $updatedActivity = $activity->update($properties);
                 
-                (new \model\GoogleWalletTicket())->updateClass($updatedActivity);
-                
+                if(_WALLETISSUERID) {
+                    (new \model\GoogleWalletTicket())->updateClass($updatedActivity);
+                }
+                                
                 $request->set('forwardqueryparams', ['id' => $id]);
                 return self::CMD_OK;
             }
