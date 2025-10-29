@@ -1,16 +1,17 @@
 <?php
     $activity = $request->get('activity');
+    $member = $request->get('member') ?? '';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <?php include 'MVCFramework/views/includes/head.php'; ?>
-        <title>Brussels Muzieque Ticketing</title>
+        <title><?=APP?> Ticketing</title>
     </head>
     <body>
         <div class="container-fluid p-3 bg-white text-black-50">
             <div class="d-flex w-100 justify-content-between">
-                 <img src="assets/bm-WHITE.jpg" alt="Brussels Muzieque" width="35%"> 
+                <img src="<?=_LOGO?>" alt="Logo missing" width="35%"> 
                 <p class="text-center"><b>Ticketing system</b></p>
                 <p> </p>
             </div>
@@ -37,6 +38,11 @@
                 <?=$activity->location ?? 
                     'Info volgt'
                 ?><br>
+            <?php if(_MINLEVELTOLOGIN !== 'A') {?>    
+            <br><b>Member: </b>
+                <?=$member->name?><br>
+                
+            <?php } ?>
             <form method="POST">
                 <div class="card mt-5" style="width: 98%;">
                 <div class="row m-3">
@@ -58,6 +64,7 @@
                     }?>
                     <input type="hidden" id="numberOfCostitems" value="<?=($i - 1)?>">                            
                 </div>
+                <?php if(_MINLEVELTOLOGIN === 'A') {?>    
                 <div class="row m-3">
                     <div class="col-lg-3">
                     <label for="name">
@@ -83,6 +90,7 @@
                 </div>
                 <?php if ($request->get('emailIsEmpty')) { ?> 
                     <div class='row m-3 text-danger'>* Provide a valid email address</div>
+                <?php } ?>
                 <?php } ?>
                 <div class="row m-3">               
                     <h3 class="text-primary">Total to pay: 
