@@ -64,6 +64,9 @@
         <status value="CMD_OK">
             <forward path="/createPayment" />
         </status>
+        <status value="CMD_CONTINUE">
+            <forward path="/paymentToMollie" />
+        </status>
         <status value="CMD_ADMIN">
             <forward path="/paymentConfirmation" />
         </status>
