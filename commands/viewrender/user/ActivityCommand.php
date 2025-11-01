@@ -120,12 +120,16 @@ class ActivityCommand extends \controllers\Command {
                 }
             }
 
-            if ($total > 0) {
+            if ($total <= 0) {
+                $request->set('forwardqueryparams', array('order_id' => $orderid*171963, 'chk' => "BM*171963"));
+                return self::CMD_ADMIN;
+            }
+            if(_WTALLOWED === 'Y') {
                 $request->set('forwardqueryparams', array('id' => $orderid*171963, 'chk' => "BM*171963"));
                 return self::CMD_OK;
             } else {
-                $request->set('forwardqueryparams', array('id' => $orderid*171963, 'chk' => "BM*171963"));
-                return self::CMD_ADMIN;
+                $request->set('forwardqueryparams', array('id' => $orderid, 'amount' => $total.'.00'));
+                return self::CMD_CONTINUE;
             }
         } 
             
