@@ -33,6 +33,10 @@ class ActivityCommand extends \controllers\CommandDecorator {
 
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \sessions\NoLoginRequired());
+        if(_MINLEVELTOLOGIN === 'A') {               
+            $this->setLoginLevel(new \sessions\NoLoginRequired());
+        } else {
+            $this->setLoginLevel(new \sessions\UserLogin());
+        }
     }
 }
