@@ -53,7 +53,7 @@ class DownloadPdfTicketsCommand extends \controllers\Command {
             $pdf->Cell(0,10,'Concert: '.$activity->description,0,1,'L');
             $pdf->Ln(5);
             
-            if($activity->start <> "00:00:00") {
+            if(!$activity->isComposite()) {
             $pdf->SetFont('Times','B',10);
             $pdf->Cell(20,5,'When:',0,0,'L');
             $pdf->SetFont('Times','',10);
@@ -124,7 +124,7 @@ class PDF extends \FPDF
         $title = $this->metadata['Title'];
 
         // Logo
-        $this->Image('assets/bm-WHITE.jpg',10,6,32);
+        $this->Image(_LOGO,10,6,32);
         // Arial bold 15
 //        $this->SetFont('Arial','B',15);
         // Calculate width of title and position
