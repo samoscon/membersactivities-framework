@@ -23,7 +23,9 @@ class Payment_RGLR extends \model\subscriptions\PaymentTypeImplementation {
         if($status === 'paid'){
             $subscription = $this->getSubscription($payment);
             // Create your wallet tickets          
-            $this->initiateGoogleWalletTickets($payment, $subscription->costitem->activity);
+            if(_WALLETISSUERID) {
+                $this->initiateGoogleWalletTickets($payment, $subscription->costitem->activity);
+            }
             // Send an email to the member confirming his tickets have been paid
             $orderedTickets = $this->getOrderedTicketsText($payment);
             $download = $this->getDownloadText($payment, $subscription->costitem->activity);
@@ -33,7 +35,7 @@ $orderedTickets
 $download
 <br><br>
 Kind regards,<br>
-Brussels Muzieque
+[Name of your Organization]
 _MAIL_;
             \mail\Mailer::sendMail("Tickets {$subscription->costitem->activity->description}", $body, _MAILTO, $payment->member->email);               
             $payment->update(array("source" => 'mollie tickets sent', 'status' => 'paid'));
@@ -72,7 +74,8 @@ _MAIL_;
     
     public function getDownloadText(\model\Payment $payment, \model\activities\Activity $activity): string {
         if(!$activity->isComposite()) {
-           $googleWalletToken = (new \model\GoogleWalletTicket())->createJWT($payment->getId());
+          if (_WALLETISSUERID) {
+            $googleWalletToken = (new \model\GoogleWalletTicket())->createJWT($payment->getId());
             $imgsrc = _ASSETDIR.'enUS_add_to_google_wallet_wallet-button.png';
             return 'You can <a href="'._APPDIR.'pdfTickets?id='.($payment->getId()*171963).'&chk=BM*171963">'
                     . 'download your tickets in pdf format'
@@ -80,7 +83,12 @@ _MAIL_;
                     . ' or <br><br>'
                     . '<a href="'.$googleWalletToken.'"><img src="'.$imgsrc.'" style="width:192px;height:48px;" alt="Google Wallet button missing"/></a>'
                     ;
-
+          } else {
+            return 'You can <a href="'._APPDIR.'pdfTickets?id='.($payment->getId()*171963).'&chk=BM*171963">'
+                    . 'download your tickets in pdf format'
+                    . '</a>'
+                    ;
+          }
         } else {
             return 'Your tickets for the individual concerts, will be sent to you 1 week before the event.';
         }                
