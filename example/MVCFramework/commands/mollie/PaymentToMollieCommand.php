@@ -34,7 +34,7 @@ class PaymentToMollieCommand extends \commands\datarequest\mollie\PaymentToMolli
 
 
         $request->set('paymentConfirmation', 'paymentConfirmation');
-        $request->set('orderDescription', "BM orderid=".$id);
+        $request->set('orderDescription', APP." orderid=".$id);
     }
 
     
