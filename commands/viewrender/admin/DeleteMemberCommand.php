@@ -7,7 +7,7 @@
  * @copyright (c) 2024, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-namespace commands\admin;
+namespace commands\viewrender\admin;
 
 /**
  * Specialization of a Command
