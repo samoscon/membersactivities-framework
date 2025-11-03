@@ -21,28 +21,22 @@ class PaymentConfirmationCommand extends \controllers\Command {
      * 
      * @param \registry\Request $request
      */
-    public function doExecute(\registry\Request $request): int {
-        $id = filter_var($request->get('order_id'), FILTER_VALIDATE_INT)/171963;
-
-        try {
-            $payment = \model\Payment::find($id); 
-        } catch (\Exception $exc) {
-            $request->addFeedback($request->get('feedbackPaymentNotFound'));
-            return self::CMD_ERROR;
-        }
-        
-        if (!$payment->isPaid()) {
-            $request->addFeedback($request->get('feedbackPaymentNotPaid'));
-            return self::CMD_ERROR;
-        }
-        
-        $activity = $payment->paymenttypeimplementation->getSubscription($payment)->costitem->activity;
-
-        $responses['payment'] = $payment;
-        $responses['activity'] = $activity;
+    public function doExecuteDecorator(\registry\Request $request): void {
+        /** Put your code here. */
+        $responses['feedbackPaymentNotFound'] = 'Wij hebben uw betaling niet terug gevonden. Neem contact op met '._MAILREPLYTO;
+        $responses['feedbackPaymentNotPaid'] = 'Je betaling werd niet uitgevoerd. In geval van problemen, contacteer '._MAILREPLYTO;
         
         $this->addResponses($request, $responses);
-        return self::CMD_DEFAULT;
+    }
+    
+    /**
+     * Specialization of initCommand
+     */
+    #[\Override]
+    public function initCommand(): void {
+        $classname = '\\'.(new \ReflectionClass(get_called_class()))->getName();
+        $classname = str_replace('commands', 'commands\viewrender', $classname);
+        $this->setCommand(new $classname);        
     }
     
     /**
