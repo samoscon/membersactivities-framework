@@ -29,7 +29,7 @@
     </command>
 
     <command path="/confirmPassword" class="\commands\login\ConfirmPasswordCommand">
-        <view name="/confirmView" />
+        <view name="/login/confirmpasswordView" />
         <status value="CMD_OK">
             <forward path="/" />
         </status>
@@ -49,7 +49,6 @@
     </command>
 
     <command path="/logout" class="\commands\login\LogoutCommand">
-        <view name="/confirmView" />
         <status value="CMD_OK">
             <forward path="/" />
         </status>
