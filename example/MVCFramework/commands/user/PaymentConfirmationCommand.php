@@ -27,12 +27,12 @@ class PaymentConfirmationCommand extends \controllers\Command {
         try {
             $payment = \model\Payment::find($id); 
         } catch (\Exception $exc) {
-            $request->addFeedback('Your payment could not be found in the database: '.$exc->getMessage());
+            $request->addFeedback($request->get('feedbackPaymentNotFound'));
             return self::CMD_ERROR;
         }
         
         if (!$payment->isPaid()) {
-            $request->addFeedback('Your payment has not been executed. In case of problems, please contact '._MAILREPLYTO);
+            $request->addFeedback($request->get('feedbackPaymentNotPaid'));
             return self::CMD_ERROR;
         }
         
