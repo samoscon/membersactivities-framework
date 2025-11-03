@@ -23,8 +23,8 @@ class PaymentConfirmationCommand extends \controllers\Command {
      */
     public function doExecuteDecorator(\registry\Request $request): void {
         /** Put your code here. */
-        $responses['feedbackPaymentNotFound'] = 'Wij hebben uw betaling niet terug gevonden. Neem contact op met '._MAILREPLYTO;
-        $responses['feedbackPaymentNotPaid'] = 'Je betaling werd niet uitgevoerd. In geval van problemen, contacteer '._MAILREPLYTO;
+        $responses['feedbackPaymentNotFound'] = 'We could not find your payment. Please contact '._MAILREPLYTO;
+        $responses['feedbackPaymentNotPaid'] = 'Your payment has not been executed. In case of problems, please contact '._MAILREPLYTO;
         
         $this->addResponses($request, $responses);
     }
