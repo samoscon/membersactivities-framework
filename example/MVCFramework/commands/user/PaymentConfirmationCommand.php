@@ -14,7 +14,7 @@ namespace commands\user;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class PaymentConfirmationCommand extends \controllers\Command {
+class PaymentConfirmationCommand extends \controllers\CommandDecorator {
     
     /**
      * Specialization of the execute method of Command
