@@ -17,12 +17,12 @@
     }
   ],
   "require": {
-    "samoscon/controller-framework": "^1.0",
-    "mollie/mollie-api-php": "^2.0"
+      "samoscon/controller-framework": "^1.0",
+      "mollie/mollie-api-php": "^2.0"
   },
   "autoload": {
     "psr-4": {
-      "samoscon\\membersactivities-framework\\": "src/"
+      "membersactivities\\": "src/"
     }
-  }  
+  }
 }
