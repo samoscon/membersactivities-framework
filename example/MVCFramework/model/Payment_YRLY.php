@@ -16,11 +16,11 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Payment_YRLY extends \model\subscriptions\PaymentTypeImplementation {
+class Payment_YRLY extends \membersactivities\model\subscriptions\PaymentTypeImplementation {
     #[\Override]
     public function statusReceived(\model\Payment $payment, string $status): void {
         if ($status === 'paid') {
-            \model\members\Member::find($payment->member_id)->extendMembership();
+            \model\Member::find($payment->member_id)->extendMembership();
         }        
     }
 }

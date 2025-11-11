@@ -14,6 +14,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Activity extends \model\activities\Activity {
+class Activity extends \membersactivities\model\activities\Activity {
 //    put your code here    
 }

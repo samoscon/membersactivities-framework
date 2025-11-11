@@ -15,6 +15,6 @@ namespace model;
  * @link ../graphs/members%20Class%20Diagram.svg Members class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-final class MemberMapper extends \model\members\MemberMapper {
+final class MemberMapper extends \membersactivities\model\members\MemberMapper {
 //    put your code here
 }

@@ -16,6 +16,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Subscription_RGLR extends \model\subscriptions\SubscriptionTypeImplementation {
+class Subscription_RGLR extends \membersactivities\model\subscriptions\SubscriptionTypeImplementation {
 //    put your code here
 }

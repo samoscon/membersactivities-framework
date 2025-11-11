@@ -16,7 +16,7 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Payment_RGLR extends \model\subscriptions\PaymentTypeImplementation {
+class Payment_RGLR extends \membersactivities\model\subscriptions\PaymentTypeImplementation {
     #[\Override]
     public function statusReceived(\model\Payment $payment, string $status): void {
         // Put here your code if special things needs to be done when a payment status is received. E.g.
@@ -35,15 +35,15 @@ $orderedTickets
 $download
 <br><br>
 Kind regards,<br>
-[Name of your Organization]
+Brussels Muzieque
 _MAIL_;
-            \mail\Mailer::sendMail("Tickets {$subscription->costitem->activity->description}", $body, _MAILTO, $payment->member->email);               
+            \controllerframework\mail\Mailer::sendMail("Tickets {$subscription->costitem->activity->description}", $body, _MAILTO, $payment->member->email);               
             $payment->update(array("source" => 'mollie tickets sent', 'status' => 'paid'));
         }
     }
     
     public function getOrderedTicketsText(\model\Payment $payment): string {
-            $subscriptions = '<ul>';
+            $subscriptions = '<ul class="list-inline">';
             $total = 0;
             foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
                 $subscriptions .= '<li>'.$subscription->costitem->description.' ('.$subscription->costitem->price.' EUR) * '.
@@ -72,7 +72,7 @@ _MAIL_;
         }                
     }
     
-    public function getDownloadText(\model\Payment $payment, \model\activities\Activity $activity): string {
+    public function getDownloadText(\model\Payment $payment, \model\Activity $activity): string {
         if(!$activity->isComposite()) {
           if (_WALLETISSUERID) {
             $googleWalletToken = (new \model\GoogleWalletTicket())->createJWT($payment->getId());
@@ -86,7 +86,7 @@ _MAIL_;
           } else {
             return 'You can <a href="'._APPDIR.'pdfTickets?id='.($payment->getId()*171963).'&chk=BM*171963">'
                     . 'download your tickets in pdf format'
-                    . '</a>'
+                    . '</a> here.'
                     ;
           }
         } else {

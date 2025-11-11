@@ -14,7 +14,7 @@ namespace commands\admin;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class CreateActivityCommand extends \controllers\CommandDecorator {
+class CreateActivityCommand extends \controllerframework\controllers\CommandDecorator {
     
     /**
      * Specialization of the execute method of Command
@@ -23,7 +23,7 @@ class CreateActivityCommand extends \controllers\CommandDecorator {
      * @return int
      */
     #[\Override]
-    public function doExecuteDecorator(\registry\Request $request): void {
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {
         /** Put your code here.  */
         $this->addResponses($request, [
             'title' => 'Nieuw concert', //Contains the title on top of view
@@ -37,7 +37,7 @@ class CreateActivityCommand extends \controllers\CommandDecorator {
     #[\Override]
     public function initCommand(): void {
         $classname = '\\'.(new \ReflectionClass(get_called_class()))->getName();
-        $classname = str_replace('commands', 'commands\viewrender', $classname);
+        $classname = str_replace('commands', 'membersactivities\commands', $classname);
         $this->setCommand(new $classname);        
     }
 
@@ -46,7 +46,7 @@ class CreateActivityCommand extends \controllers\CommandDecorator {
      */
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \sessions\AdminLogin());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 
 }

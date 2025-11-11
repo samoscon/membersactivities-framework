@@ -14,7 +14,7 @@ namespace commands\mollie;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class PaymentToMollieCommand extends \commands\datarequest\mollie\PaymentToMollieCommand {
+class PaymentToMollieCommand extends \membersactivities\commands\mollie\PaymentToMollieCommand {
     
     /**
      * Specialization of the execute method of Command
@@ -22,7 +22,7 @@ class PaymentToMollieCommand extends \commands\datarequest\mollie\PaymentToMolli
      * @param \registry\Request $request
      */
     #[\Override]
-    public function doExecuteDecorator(\registry\Request $request): void {        
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {        
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
         if($id) {        
             try {
@@ -44,6 +44,6 @@ class PaymentToMollieCommand extends \commands\datarequest\mollie\PaymentToMolli
      */
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
     }
 }

@@ -14,14 +14,14 @@ namespace commands\user;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class PaymentConfirmationCommand extends \controllers\CommandDecorator {
+class PaymentConfirmationCommand extends \controllerframework\controllers\CommandDecorator {
     
     /**
      * Specialization of the execute method of Command
      * 
      * @param \registry\Request $request
      */
-    public function doExecuteDecorator(\registry\Request $request): void {
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {
         /** Put your code here. */
         $responses['feedbackPaymentNotFound'] = 'We could not find your payment. Please contact '._MAILREPLYTO;
         $responses['feedbackPaymentNotPaid'] = 'Your payment has not been executed. In case of problems, please contact '._MAILREPLYTO;
@@ -35,8 +35,8 @@ class PaymentConfirmationCommand extends \controllers\CommandDecorator {
     #[\Override]
     public function initCommand(): void {
         $classname = '\\'.(new \ReflectionClass(get_called_class()))->getName();
-        $classname = str_replace('commands', 'commands\viewrender', $classname);
-        $this->setCommand(new $classname);        
+        $classname = str_replace('commands', 'membersactivities\commands', $classname);
+       $this->setCommand(new $classname);        
     }
     
     /**
@@ -44,9 +44,9 @@ class PaymentConfirmationCommand extends \controllers\CommandDecorator {
      */
     protected function getLevelOfLoginRequired(): void {
         if(_MINLEVELTOLOGIN === 'A') {               
-            $this->setLoginLevel(new \sessions\NoLoginRequired());
+            $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
         } else {
-            $this->setLoginLevel(new \sessions\UserLogin());
+            $this->setLoginLevel(new \controllerframework\sessions\UserLogin());
         }
     }
 

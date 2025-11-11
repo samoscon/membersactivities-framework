@@ -14,6 +14,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class CostitemMapper extends \model\activities\CostitemMapper {
+class CostitemMapper extends \membersactivities\model\activities\CostitemMapper {
     //put your code here
 }

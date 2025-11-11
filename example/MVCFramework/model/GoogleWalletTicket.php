@@ -14,7 +14,7 @@ namespace model;
  *
  * @author dirk
  */
-class GoogleWalletTicket extends \model\wallet\GoogleWalletTicket {
+class GoogleWalletTicket extends \membersactivities\model\wallet\GoogleWalletTicket {
 
     /**
      * Update a class in Google Wallet API.
@@ -28,7 +28,7 @@ class GoogleWalletTicket extends \model\wallet\GoogleWalletTicket {
      * @return EventTicketClass The updated Event Ticket
      */
     #[\Override]
-    protected function doUpdateClass(\Google\Service\Walletobjects\EventTicketClass $updatedClass, \model\activities\Activity $activity): \Google\Service\Walletobjects\EventTicketClass {
+    protected function doUpdateClass(\Google\Service\Walletobjects\EventTicketClass $updatedClass, \membersactivities\model\activities\Activity $activity): \Google\Service\Walletobjects\EventTicketClass {
         // See link below for more information on required properties
         // https://developers.google.com/wallet/tickets/events/rest/v1/eventticketclass
         

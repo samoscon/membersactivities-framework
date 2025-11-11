@@ -16,6 +16,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Costitem_RGLR extends \model\activities\CostitemTypeImplementation {
+class Costitem_RGLR extends \membersactivities\model\activities\CostitemTypeImplementation {
 //    put your code here
 }

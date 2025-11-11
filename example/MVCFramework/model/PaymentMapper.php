@@ -14,6 +14,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class PaymentMapper extends \model\subscriptions\PaymentMapper {
+class PaymentMapper extends \membersactivities\model\subscriptions\PaymentMapper {
     //put your code here
 }

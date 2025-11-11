@@ -15,11 +15,11 @@ require_once './vendor/setasign/fpdf/fpdf.php';
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class DownloadPdfTicketsCommand extends \controllers\Command {
+class DownloadPdfTicketsCommand extends \controllerframework\controllers\Command {
     //put your code here
     
     #[\Override]
-    public function doExecute(\registry\Request $request): int {
+    public function doExecute(\controllerframework\registry\Request $request): int {
         // Instantiation of inherited class
         $pdf = new PDF();
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT)/171963;
@@ -107,7 +107,7 @@ class DownloadPdfTicketsCommand extends \controllers\Command {
     
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \sessions\NoLoginRequired());        
+        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());        
     }
 }
 

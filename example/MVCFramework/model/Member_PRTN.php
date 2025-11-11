@@ -15,7 +15,7 @@ namespace model;
  * @link ../graphs/members%20Class%20Diagram.svg Members class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Member_PRTN extends \model\members\MemberTypeImplementation {
+class Member_PRTN extends \membersactivities\model\members\MemberTypeImplementation {
 
     /**
      * Returns yearly participation fee for this type of Member
@@ -27,7 +27,7 @@ class Member_PRTN extends \model\members\MemberTypeImplementation {
      * @return int
      */
     #[\Override]
-    public function getYearlyParticipationFee(\model\members\Member $member): int {
+    public function getYearlyParticipationFee(\model\Member $member): int {
         $reg = \registry\Registry::instance();
         $partner = $reg->getMemberMapper()->find($member->partnerid);    
         return $partner->subscriptionuntil > $member->subscriptionuntil ? 300 : 350;

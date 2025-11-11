@@ -15,6 +15,6 @@ namespace model;
  * @link ../graphs/subscriptions%20Class%20Diagram.svg Subscriptions class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Costitem extends \model\activities\Costitem {
+class Costitem extends \membersactivities\model\activities\Costitem {
     //put your specific code here
 }

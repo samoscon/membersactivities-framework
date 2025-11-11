@@ -14,6 +14,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class SubscriptionMapper extends \model\subscriptions\SubscriptionMapper {
+class SubscriptionMapper extends \membersactivities\model\subscriptions\SubscriptionMapper {
     //put your code here
 }

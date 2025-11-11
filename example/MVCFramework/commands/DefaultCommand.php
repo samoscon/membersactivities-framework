@@ -16,7 +16,7 @@ namespace commands;
  * @link ../graphs/controllers%20(Application%20Controller)%20Class%20Diagram.svg Controllers class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class DefaultCommand extends \controllers\CommandDecorator {
+class DefaultCommand extends \controllerframework\controllers\CommandDecorator {
     
     /**
      * Concrete specialization of execute method in Command
@@ -25,7 +25,7 @@ class DefaultCommand extends \controllers\CommandDecorator {
      * @return int Returns status of the executed command
      */
     #[\Override]
-    public function doExecuteDecorator(\registry\Request $request): void {
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {
         /** Put your code here. Following line are meant as an example */
         $this->addResponses($request, [
             'title' => 'Inloggen']);
@@ -35,7 +35,7 @@ class DefaultCommand extends \controllers\CommandDecorator {
      * Specialization of initCommand
      */
     public function initCommand(): void {
-        $this->setCommand(new \commands\viewrender\DefaultCommand());        
+        $this->setCommand(new \membersactivities\commands\DefaultCommand());        
     }
 
     /**
@@ -44,6 +44,6 @@ class DefaultCommand extends \controllers\CommandDecorator {
      */
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
     }
 }

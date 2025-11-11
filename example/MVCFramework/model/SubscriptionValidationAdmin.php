@@ -24,7 +24,7 @@ class SubscriptionValidationAdmin extends SubscriptionValidationUser {
      * @param \model\activities\Costitem $subscribableitem
      * @return array Format: 'errorcode' => int and 'description' => string
      */
-    public function doCheckSubscription(\model\members\Member $member, \model\activities\Costitem $subscribableitem): array {
+    public function doCheckSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
         if(!$member->active) {
             return $this->errorcode(200, 'Lidmaatschap is gedeactiveerd. Inschrijving kan niet plaats vinden.');
         }

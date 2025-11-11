@@ -15,6 +15,6 @@ namespace model;
  * @link ../graphs/subscriptions%20Class%20Diagram.svg Subscriptions class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Subscription extends \model\subscriptions\Subscription {
+class Subscription extends \membersactivities\model\subscriptions\Subscription {
     //put your specific code here
 }

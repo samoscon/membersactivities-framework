@@ -16,6 +16,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Activity_RGLR extends \model\activities\ActivityTypeImplementation {
+class Activity_RGLR extends \membersactivities\model\activities\ActivityTypeImplementation {
 //    put your code here
 }

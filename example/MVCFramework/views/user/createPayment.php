@@ -27,7 +27,7 @@ $payment = $request->get('payment');
   			<div class="text-primary" id="wiretransfer" style="display:none;">
   			    For the wire transfer, please use following data:
   			    <ul>
-  				<li><b>IBAN:</b> BExx xxxx xxxx xxxx</li>
+  				<li><b>IBAN:</b> BE80 0019 4503 2377</li>
   				<li><b>BIC:</b> GEBABEBB</li>
   				<li><b>Name:</b> <?=_MAILFROMNAME?></li>
   				<li><b>Amount:</b> <?=$payment->amount?> EUR</li>
@@ -38,7 +38,7 @@ $payment = $request->get('payment');
                 </div>
                 
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-dark btn-block mt-4">Bevestig</button>
+                <button type="submit" class="btn btn-dark btn-block mt-4">Confirm</button>
             </form>              
         </div>
 <script>

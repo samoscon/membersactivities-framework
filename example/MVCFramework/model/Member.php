@@ -15,6 +15,6 @@ namespace model;
  * @link ../graphs/members%20Class%20Diagram.svg Members class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Member extends \model\members\Member {
+class Member extends \membersactivities\model\members\Member {
 //    put your code here
 }

@@ -15,7 +15,7 @@ namespace model;
  * @link ../graphs/subscriptions%20Class%20Diagram.svg Subscriptions class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class SubscriptionValidationUser extends \model\subscriptions\SubscriptionValidationStrategy {
+class SubscriptionValidationUser extends \membersactivities\model\subscriptions\SubscriptionValidationStrategy {
     
     /**
      * Checks subscription for MMC when subscription is executed by a User
@@ -24,7 +24,7 @@ class SubscriptionValidationUser extends \model\subscriptions\SubscriptionValida
      * @param \model\activities\Costitem $subscribableitem
      * @return array Format: 'errorcode' => int and 'description' => string
      */
-    public function doCheckSubscription(\model\members\Member $member, \model\activities\Costitem $subscribableitem): array {
+    public function doCheckSubscription(\membersactivities\model\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
          if($subscribableitem->activity->subscriptionPeriodOver()) {
             return $this->errorcode(100, 'Inschrijving of annuleren is jammer genoeg niet langer mogelijk.');
         }

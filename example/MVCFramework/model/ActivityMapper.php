@@ -14,6 +14,6 @@ namespace model;
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class ActivityMapper extends \model\activities\ActivityMapper {
+class ActivityMapper extends \membersactivities\model\activities\ActivityMapper {
     //put your code here
 }
