@@ -18,7 +18,7 @@
         </status>
     </command>
     
-    <command path="/initiatePassword" class="\commands\login\InitiatePasswordCommand">
+    <command path="/initiatePassword" class="\controllerframework\commands\login\InitiatePasswordCommand">
         <view name="/login/initiatepasswordView" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -28,14 +28,14 @@
         </status>
     </command>
 
-    <command path="/confirmPassword" class="\commands\login\ConfirmPasswordCommand">
+    <command path="/confirmPassword" class="\controllerframework\commands\login\ConfirmPasswordCommand">
         <view name="/login/confirmpasswordView" />
         <status value="CMD_OK">
             <forward path="/" />
         </status>
     </command>
 
-    <command path="/changePassword" class="\commands\login\ChangePasswordCommand">
+    <command path="/changePassword" class="\controllerframework\commands\login\ChangePasswordCommand">
         <view name="/login/changepasswordView" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -48,7 +48,7 @@
         </status>
     </command>
 
-    <command path="/logout" class="\commands\login\LogoutCommand">
+    <command path="/logout" class="\controllerframework\commands\login\LogoutCommand">
         <status value="CMD_OK">
             <forward path="/" />
         </status>
@@ -90,11 +90,11 @@
     </command>
     
     <command path="/webhookFromMollie" 
-             class="\commands\datarequest\mollie\WebhookFromMollieCommand">
+             class="\membersactivities\commands\mollie\WebhookFromMollieCommand">
         <datarequest type="NoRender" />
     </command>
     
-    <command path="/wireConfirmation" class="\commands\publicpage\JustShowViewCommand">
+    <command path="/wireConfirmation" class="\controllerframework\commands\publicpage\JustShowViewCommand">
         <view name="/user/wireConfirmView" />
     </command>
 
@@ -140,7 +140,7 @@
         </status>
     </command>
 
-    <command path="/addActivityToComposite" class="\commands\viewrender\admin\AddActivityToCompositeCommand">
+    <command path="/addActivityToComposite" class="\membersactivities\commands\admin\AddActivityToCompositeCommand">
         <status value="CMD_ERROR">
             <view name="/errorView" />
         </status>
@@ -149,7 +149,7 @@
         </status>
     </command>
 
-    <command path="/removeActivityFromComposite" class="\commands\viewrender\admin\RemoveActivityFromCompositeCommand">
+    <command path="/removeActivityFromComposite" class="\membersactivities\commands\admin\RemoveActivityFromCompositeCommand">
         <status value="CMD_ERROR">
             <view name="/errorView" />
         </status>
@@ -158,7 +158,7 @@
         </status>
     </command>
 
-    <command path="/deleteActivity" class="\commands\viewrender\admin\DeleteActivityCommand">
+    <command path="/deleteActivity" class="\membersactivities\commands\admin\DeleteActivityCommand">
         <view name="/admin/deleteActivity" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -168,7 +168,7 @@
         </status>
     </command>
 
-    <command path="/createCostitem" class="\commands\viewrender\admin\CreateCostitemCommand">
+    <command path="/createCostitem" class="\membersactivities\commands\admin\CreateCostitemCommand">
         <view name="/admin/createCostitem" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -188,7 +188,7 @@
         </status>
     </command>
 
-    <command path="/deleteCostitem" class="\commands\viewrender\admin\DeleteCostitemCommand">
+    <command path="/deleteCostitem" class="\membersactivities\commands\admin\DeleteCostitemCommand">
         <view name="/admin/deleteCostitem" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -198,7 +198,7 @@
         </status>
     </command>
 
-    <command path="/createMember" class="\commands\viewrender\admin\CreateMemberCommand">
+    <command path="/createMember" class="\membersactivities\commands\admin\CreateMemberCommand">
         <view name="/admin/createMember" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -218,7 +218,7 @@
         </status>
     </command>
 
-    <command path="/addMemberToComposite" class="\commands\viewrender\admin\AddMemberToCompositeCommand">
+    <command path="/addMemberToComposite" class="\membersactivities\commands\admin\AddMemberToCompositeCommand">
         <status value="CMD_ERROR">
             <view name="/errorView" />
         </status>
@@ -227,7 +227,7 @@
         </status>
     </command>
 
-    <command path="/removeMemberFromComposite" class="\commands\viewrender\admin\RemoveMemberFromCompositeCommand">
+    <command path="/removeMemberFromComposite" class="\membersactivities\commands\admin\RemoveMemberFromCompositeCommand">
         <status value="CMD_ERROR">
             <view name="/errorView" />
         </status>
@@ -236,7 +236,7 @@
         </status>
     </command>
 
-    <command path="/deleteMember" class="\commands\viewrender\admin\DeleteMemberCommand">
+    <command path="/deleteMember" class="\membersactivities\commands\admin\DeleteMemberCommand">
         <view name="/admin/deleteMember" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -256,7 +256,7 @@
         </status>
     </command>
 
-    <command path="/deletePayment" class="\commands\viewrender\admin\DeletePaymentCommand">
+    <command path="/deletePayment" class="\membersactivities\commands\admin\DeletePaymentCommand">
         <view name="/admin/deletePayment" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -266,7 +266,7 @@
         </status>
     </command>
 
-    <command path="/searchMembers" class="\commands\viewrender\admin\SearchMembersCommand">
+    <command path="/searchMembers" class="\membersactivities\commands\admin\SearchMembersCommand">
         <view name="/admin/searchMembersView" />
         <status value="CMD_ERROR">
             <view name="/errorView" />
@@ -274,11 +274,11 @@
     </command>
     
     <!-- paths for reporting/downloads -->
-    <command path="/xlsParticipants" class="\commands\datarequest\downloads\DownloadXlsParticipantsCommand">
+    <command path="/xlsParticipants" class="\membersactivities\commands\downloads\DownloadXlsParticipantsCommand">
         <datarequest type="Download" />
     </command>
     
-    <command path="/xlsMembers" class="\commands\datarequest\downloads\DownloadXlsMembersCommand">
+    <command path="/xlsMembers" class="\membersactivities\commands\downloads\DownloadXlsMembersCommand">
         <datarequest type="Download" />
     </command>
 
