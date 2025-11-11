@@ -3,7 +3,7 @@ Framework managing the ticketing for members taking part to an activity
 
 Steps to deploy the basic framework in Apache2 web server with Oracle (or MariaDB) database running in a Linux environment:
 
-1. Create a root folder for your project with the name [Your Name of the root folder]
+1. Create a root folder for your project with the name [Your Name of the project root folder]
 2. Execute in your project root folder "composer init". Add following dependencies to your composer.json:
 
     "require": {
@@ -28,8 +28,10 @@ Steps to deploy the basic framework in Apache2 web server with Oracle (or MariaD
 
 3. Execute in your project root folder "composer install".
 4. Copy the files and folders under ./vendor/samoscon/membersactivities-framework/example/ to your root folder
-5. Update the ./config/app_options.ini file with your passwords and settings and 
+5. Set-up a datebase with the DatabaseSetup.sql
+6. Update the ./config/app_options.ini file with your passwords and settings and 
         (if applicable) copy your Google Wallet Ticket key.json file in the config folder
-6. Set-up a datebase with the DatabaseSetup.sql
 7. Insert manually a first member with a [name], [email], role = "A", active = "1", subscriptionuntil = "2099-12-31" 
-        (no password required, as you will set-up a password during your first login)
+        (no password required, as you will set-up a password during your first login) in your database
+
+AND YOUR READY TO TEST AND DEVELOP YOUR OWN PROJECT
