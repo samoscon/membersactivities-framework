@@ -15,7 +15,7 @@ namespace model;
  * @link ../graphs/members%20Class%20Diagram.svg Members class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
-class Member_RGLR extends \membersactivities\model\members\MemberTypeImplementation {
+class Member_RGLR extends \controllerframework\members\MemberTypeImplementation {
 
     /**
      * Returns yearly participation fee for this type of Member
