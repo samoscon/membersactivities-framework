@@ -27,6 +27,7 @@ class DefaultCommand extends \controllerframework\controllers\Command {
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
         /** variables */
+        // I add a test for the second time
         $passwordIsValid = $userNameIsFound = true;
         $passwordIsEmpty = $userIsEmpty = false;
 
