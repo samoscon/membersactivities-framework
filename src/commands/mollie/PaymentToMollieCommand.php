@@ -17,14 +17,6 @@ namespace membersactivities\commands\mollie;
 abstract class PaymentToMollieCommand extends \controllerframework\controllers\CommandDecorator {
     
     /**
-     * Specialization of the execute method of Command
-     * 
-     * @param \registry\Request $request
-     */
-    #[\Override]
-    abstract public function doExecuteDecorator(\controllerframework\registry\Request $request): void;
-
-    /**
      * Specialization of initCommand
      */
     #[\Override]
