@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\admin
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\admin
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\admin;
@@ -19,7 +19,7 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int
      */
     #[\Override]
@@ -30,27 +30,26 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
         
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
         if(!$id) {
-            $request->addFeedback("Geen correct id opgegeven.");
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
         
         try {
             $activity = \model\Activity::find($id);
+            $activity->date = date('d/m/Y', strtotime($activity->date));
+            $activity->duedate = date('d/m/Y', strtotime($activity->duedate));
+            $activity->longdescription = $activity->longdescription ? trim($activity->longdescription) : '';
+            $activity->start = $activity->start ? substr($activity->start,0,5) : '';
+            $activity->end = substr($activity->end ?? '',0,5);     
+            if($activity->isComposite()) {
+                $activity->children = $activity->getChildren();
+            }
         } catch (\Exception $exc) {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
         }
-        
-        $activity->date = date('d/m/Y', strtotime($activity->date));
-        $activity->duedate = date('d/m/Y', strtotime($activity->duedate));
-        $activity->longdescription = $activity->longdescription ? trim($activity->longdescription) : '';
-        $activity->start = $activity->start ? substr($activity->start,0,5) : '';
-        $activity->end = substr($activity->end ?? '',0,5);
-        
-        if($activity->isComposite()) {
-            $activity->children = $activity->getChildren();
-        }
-        
+                
         //related costitems
         $costitems = array();
         foreach (\model\Costitem::findAll('WHERE activity_id = '. $activity->getId()) as $costitem) {
@@ -117,7 +116,6 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of getLevelOfLoginRequired
      */
-    #[\Override]
     protected function getLevelOfLoginRequired(): void {
         $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
     }

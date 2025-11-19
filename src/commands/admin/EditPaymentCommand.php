@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\admin
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\admin
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\admin;
@@ -19,7 +19,7 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int
      */
     #[\Override]
@@ -29,7 +29,8 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
         
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
         if(!$id) {
-            $request->addFeedback("Geen correct id opgegeven.");
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
         
@@ -65,7 +66,6 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of getLevelOfLoginRequired
      */
-    #[\Override]
     protected function getLevelOfLoginRequired(): void {
         $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
     }
