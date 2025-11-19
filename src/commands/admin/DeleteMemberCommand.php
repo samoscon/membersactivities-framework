@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\admin
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\admin
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\admin;
@@ -19,19 +19,21 @@ class DeleteMemberCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int
      */
     public function doExecute(\controllerframework\registry\Request $request): int {
         /** Variables */
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
         if(!$id) {
-            $request->addFeedback("Geen correct id opgegeven.");
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
                 
         try {
             $member = \model\Member::find($id);
+            $member->subscriptionsExisting = \model\Subscription::findAll('WHERE member_id = '.$member->getId())->count() > 0;
         } catch (\Exception $exc) {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
@@ -51,7 +53,6 @@ class DeleteMemberCommand extends \controllerframework\controllers\Command {
 
         /** the page was requested via the GET method or the POST method did not return a status. */
         $responses = array();
-        $responses['subscriptionsExisting'] = \model\Subscription::findAll('WHERE member_id = '.$member->getId())->count() > 0;
         $responses['member'] = $member;
         $responses['returnpath'] = 'searchMembers';
         
