@@ -2,9 +2,9 @@
 /**
  * Activity.php
  *
- * @package model\activities
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\activities
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\activities;
@@ -32,7 +32,7 @@ abstract class Activity extends \controllerframework\db\DomainObject {
      * Based on design pattern 'Abstract Factory'
      * 
      * @param array $row
-     * @return \model\activities\Activity
+     * @return membersactivities\model\activities\Activity
      */
     #[\Override]
     public static function getInstance(array $row): Activity {
@@ -54,7 +54,7 @@ abstract class Activity extends \controllerframework\db\DomainObject {
     /**
      * Returns the subscribed Members to this Activity
      * 
-     * @return ObjectMap of \members\Member
+     * @return ObjectMap of Members
      */
     public function getParticipants(): \controllerframework\db\ObjectMap {
         if ($this->parent) {

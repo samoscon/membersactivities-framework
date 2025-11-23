@@ -2,9 +2,9 @@
 /**
  * CostitemMapper.php
  *
- * @package model\activities
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\activities
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\activities;
@@ -18,7 +18,7 @@ namespace membersactivities\model\activities;
  */
 abstract class CostitemMapper extends \controllerframework\db\Mapper  {
     /**
-     * @var string Contains the name of the related table to the Costitem class(es) in the database
+     * @var string Contains the name of the related table to the Costitem in the database
      */
     private string $tablename = 'costitem';
     
@@ -35,11 +35,12 @@ abstract class CostitemMapper extends \controllerframework\db\Mapper  {
     /**
      * Returns on the basis of a database row the associated object
      * 
-     * @param Array $row
-     * @return \model\activities\Costitem
+     * @param string $classname Name of the class
+     * @param array $row Database row
+     * @return \model\Costitem Returns the object found on the basis of database row
      */
     #[\Override]
-    protected function doCreateObject(string $classname, array $row): Costitem {
+    protected function doCreateObject(string $classname, array $row): \model\Costitem {
         return $classname::getInstance($row);
     }
 }

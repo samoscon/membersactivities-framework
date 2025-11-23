@@ -2,9 +2,9 @@
 /**
  * SubscriptionValidationStrategy.php
  *
- * @package model\subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\subscriptions
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\subscriptions;
@@ -22,24 +22,23 @@ abstract class SubscriptionValidationStrategy implements \controllerframework\au
      * Checks the validity of a subscription. If no error, it returns as well the item description and the total amount to be paid.
      * If there is an error, it returns the error description.
      * 
-     * @param \members\Member $member
-     * @param \activities\SubscribableItem $subscribableitem
-     * @param int $quantity
+     * @param \controllerframework\members\Member $member
+     * @param \membersactivities\model\activities\SubscribableItem $subscribableitem
      * @return array Format: 'errorcode' => code, 
      * if code = 0 then 'description' contains subscribed item description and we add the 'subscriptionamount' (float)
      * else the 'description' contains the error description.
      */
-    public function checkSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
-        return $this->doCheckSubscription($member, $subscribableitem);
-    }
+//    public function checkSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
+//        return $this->doCheckSubscription($member, $subscribableitem);
+//    }
  
     /**
      * Subscribe to a costitem of an activity. If the subscription is not valid, returns an errorcode
      * 
      * Implements design pattern 'Template Method'
      * 
-     * @param \model\Member $member
-     * @param model\activities\Costitem $subscribableitem
+     * @param \controllerframework\model\Member $member
+     * @param \membersactivities\model\activities\Costitem $subscribableitem
      * @param array $properties
      * @return array Format: 'errorcode', 'description'
      */
@@ -55,7 +54,7 @@ abstract class SubscriptionValidationStrategy implements \controllerframework\au
         $q = $properties['quantity'];
         $this->notifyAuditTrace(__FUNCTION__, [
             $member->name .' '. $member->lastname, 
-            " schrijft $subscription->quantity maal in voor ".
+            " subscribes $subscription->quantity times for ".
             $subscribableitem->description]);
         return $check;
     }
@@ -63,12 +62,12 @@ abstract class SubscriptionValidationStrategy implements \controllerframework\au
     /**
      * Abstract function for concrete implementations in the subsclasses
      * 
-     * @param \members\Member $member Subscribing member
-     * @param \activities\SubscribableItem $subscribableitem Subscribed Item (Costitem or Activity)
+     * @param \controllerframework\members\Member $member
+     * @param \membersactivities\model\activities\SubscribableItem $subscribableitem
      * @return array Returns an array with potential error codes as 'errorcode' => 'description'. 
      *          If no errors, return array with error code = '0'
      */
-    abstract public function doCheckSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array;
+    abstract protected function doCheckSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array;
     
     /**
      * Returns error (id and description)
@@ -77,7 +76,7 @@ abstract class SubscriptionValidationStrategy implements \controllerframework\au
      * @param string $errorcodedescription
      * @return array
      */
-    protected function errorcode($errorcodeid, $errorcodedescription = ''): array {
+    protected function errorcode(int $errorcodeid, string $errorcodedescription = ''): array {
         return array('errorcode' => $errorcodeid, 'description' => $errorcodedescription);
     }   
 }

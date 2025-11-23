@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\downloads
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\downloads
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\downloads;
@@ -19,7 +19,7 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int
      */
     #[\Override]
@@ -36,6 +36,7 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
         foreach ($participants as $participant) {
             $p = array();
             $p[] = $participant->name;
+            $p[] = $participant->lastname <> 'lastname' ? $participant->lastname : '';
             $p[] = $participant->email;
             $p[] = $participant->costitem;
             $p[] = $participant->quantity;
@@ -44,7 +45,7 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
                 
         $this->addResponses($request, [
             'filename' => $activity->date . '_Aanwezigheidslijst.csv',
-            'columnNames' => 'naam; mail; description; quantity',
+            'columnNames' => 'name; lastname; mail; subscription; quantity',
             'results' => $result
         ]);
          return self::CMD_DEFAULT;

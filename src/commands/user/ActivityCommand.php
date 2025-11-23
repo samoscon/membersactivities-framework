@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\user
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\user
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\user;
@@ -16,6 +16,12 @@ namespace membersactivities\commands\user;
  */
 class ActivityCommand extends \controllerframework\controllers\Command {
 
+    /**
+     * Specialization of the execute method of Command
+     * 
+     * @param \controllerframework\registry\Request $request
+     * @return int
+     */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
         /** Variables */
@@ -32,7 +38,8 @@ class ActivityCommand extends \controllerframework\controllers\Command {
         
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
         if(!$id) {
-            $request->addFeedback("Geen correct id opgegeven.");
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
         
@@ -43,7 +50,6 @@ class ActivityCommand extends \controllerframework\controllers\Command {
             return self::CMD_ERROR;
         }
 
-        //$activity->date = date('d/m/Y', strtotime($activity->date));
         $activity->duedate = date('d/m/Y', strtotime($activity->duedate));
         $activity->longdescription = $activity->longdescription ? trim($activity->longdescription) : '';
         $activity->start = $activity->start ? substr($activity->start,0,5) : '';
@@ -77,7 +83,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
             $quantityIsEmpty = $total ? false :true;
 
             if (!$nameIsEmpty && !$emailIsEmpty) {
-                $validatorName = $request->get('validator');
+                $validatorName = $request->get('validator') ?? '\model\SubscriptionValidationUser';
                 $validator = new $validatorName;
                 
                 if(_MINLEVELTOLOGIN === 'A') {               
@@ -87,7 +93,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
                         $propertiesMember['subscriptionuntil'] = '2099-12-31';
                         \model\Member::insert($propertiesMember); //Member is not found and should be created
                         $memberid = $this->reg->getLoginManager()->validateUsername($email);
-                        $member = \model\Member::find($memberid);
+//                        $member = \model\Member::find($memberid);
                     }
                     try {
                         $member = \model\Member::find($memberid);
@@ -115,7 +121,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
                 if ($quantity) {
                     $check = $validator->subscribe($member, $costitem, $propertiesSubscription);
                     if($check['errorcode']) {
-                        $request->addFeedback("Uw inschrijving is niet doorgegaan: " . $check['description']);
+                        $request->addFeedback($check['description']);
                         return self::CMD_ERROR;
                     }                                       
                 }

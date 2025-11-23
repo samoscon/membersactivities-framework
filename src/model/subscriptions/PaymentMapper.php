@@ -2,9 +2,9 @@
 /**
  * PaymentMapper.php
  *
- * @package model\subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\subscriptions
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\subscriptions;
@@ -23,9 +23,9 @@ abstract class PaymentMapper extends \controllerframework\db\Mapper {
     private $tablename = 'payment';
 
     /**
-     * Returns $tablename
+     * Returns the table name
      * 
-     * @return string Tablename
+     * @return string table name
      */
     #[\Override]
     public function tablename(): string {
@@ -35,7 +35,8 @@ abstract class PaymentMapper extends \controllerframework\db\Mapper {
     /**
      * Returns object instance of a Payment based on the corresponding database row
      * 
-     * @param array $row
+     * @param string $classname Name of the class
+     * @param array $row Database row
      * @return \model\Payment
      */
     #[\Override]

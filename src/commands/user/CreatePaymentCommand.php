@@ -2,9 +2,9 @@
 /**
  * Specialization of a Command
  *
- * @package commands\user
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands\user
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands\user;
@@ -19,22 +19,23 @@ class CreatePaymentCommand extends \controllerframework\controllers\Command {
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int
      */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
         /** variables */
         $orderid = $request->get('id')/171963;
-        if($orderid) {
-            try {
-                $payment = \model\Payment::find($orderid);
+        if(!$orderid) {
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
+            return self::CMD_ERROR;
+        }
 
-            } catch (Exception $exc) {
-                return self::CMD_ERROR;
-            }
-        } else {
-            $request->addFeedback('No order id provided');
+        try {
+            $payment = \model\Payment::find($orderid);
+
+        } catch (Exception $exc) {
             return self::CMD_ERROR;
         }
         

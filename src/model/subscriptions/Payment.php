@@ -2,16 +2,16 @@
 /**
  * Payment.php
  *
- * @package model/subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities/model/subscriptions
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\subscriptions;
 
 /**
  * Registers payments made via third party app or directly on the account of the organisation
- * in order to pay for subscriptions or yearly fees to activities
+ * in order to pay for subscriptions to activities or yearly fees 
  *
  * @link ../graphs/subscriptions%20Class%20Diagram.svg Subscriptions class diagram
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
@@ -28,7 +28,7 @@ abstract class Payment extends \controllerframework\db\DomainObject {
      * Returns object instance of Payment
      * 
      * @param array $row
-     * @return \model\Payment
+     * @return Payment
      */
     #[\Override]
     public static function getInstance(array $row): Payment {
@@ -45,7 +45,7 @@ abstract class Payment extends \controllerframework\db\DomainObject {
     
     #[\Override]
     /**
-     * Update an object in the database through the respective mapper of the calling class
+     * Delete a Payment and all its associated subscriptions
      * 
      */
     public function delete(): void {
@@ -65,6 +65,11 @@ abstract class Payment extends \controllerframework\db\DomainObject {
         return $this->status === 'paid';
     }
     
+    /**
+     * Forward the receipt of status to the Paymenttype Implementation (e.g. \model\Payment_RGLR)
+     * 
+     * @param string $status The status as received from the payment system or as provided by the User
+     */
     public function statusReceived(string $status): void {
         $this->paymenttypeimplementation->statusReceived($this, $status);
     }
