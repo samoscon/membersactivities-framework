@@ -2,9 +2,9 @@
 /**
  * SubscriptionMapper.php
  *
- * @package model\subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\subscriptions
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\subscriptions;
@@ -24,9 +24,9 @@ abstract class SubscriptionMapper extends \controllerframework\db\Mapper {
     private string $tablename = 'subscription';
     
     /**
-     * Returns $tablename
+     * Returns table name
      * 
-     * @return string Tablename
+     * @return string table name
      */
     #[\Override]
     public function tablename(): string {
@@ -36,7 +36,8 @@ abstract class SubscriptionMapper extends \controllerframework\db\Mapper {
     /**
      * Returns object instance of Subscription in the client code
      * 
-     * @param array $row
+     * @param string $classname Name of the class
+     * @param array $row Database row
      * @return \model\Subscription
      */
     #[\Override]

@@ -2,15 +2,15 @@
 /**
  * GoogleWalletTicket.php
  *
- * @package wallet
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\wallet
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 
 namespace membersactivities\model\wallet;
 
-require './vendor/autoload.php';
+require_once './vendor/autoload.php';
 
 // [START imports]
 use Firebase\JWT\JWT;
@@ -43,25 +43,34 @@ abstract class GoogleWalletTicket {
     /**
      * The Google API Client
      * https://github.com/google/google-api-php-client
+     * 
+     * @var GoogleClient Api to Google Client
      */
     public GoogleClient $client;
 
     /**
      * Path to service account key file from Google Cloud Console. Environment
      * variable: GOOGLE_APPLICATION_CREDENTIALS.
+     * 
+     * @var string Path to service account key file from Google Cloud Console.
      */
     public string $keyFilePath;
 
     /**
-     * Service account credentials for Google Wallet APIs.
+     * @var ServiceAccountCredentials Service account credentials for Google Wallet APIs.
      */
     public ServiceAccountCredentials $credentials;
 
     /**
-     * Google Wallet service client.
+     * @var Walletobjects Google Wallet service client.
      */
     public Walletobjects $service;
 
+    /**
+     * Constructor
+     * 
+     * @return GoogleWalletTicket 
+     */
     public function __construct() {
         $this->keyFilePath = getenv('GOOGLE_APPLICATION_CREDENTIALS') ?: _WALLETCREDENTIALS;
 
@@ -90,12 +99,12 @@ abstract class GoogleWalletTicket {
     /**
     * Create a class.
      *
-     * @param string $issuerId The issuer ID being used for this request.
-     * @param string $classSuffix Developer-defined unique ID for this pass class.
+     * @param int $id The id of the activity being used for this request.
+     * @param string $description eventname (Title of the event).
      *
      * @return string The pass class ID: "{$issuerId}.{$classSuffix}"
     */
-    public function createClass(int $id, string $description) {
+    public function createClass(int $id, string $description): string {
         $issuerId = _WALLETISSUERID;
         $classSuffix = APP.'_activityid_'.$id;
         // Check if the class exists
@@ -165,9 +174,8 @@ abstract class GoogleWalletTicket {
      *
      * **Warning:** This replaces all existing class attributes!
      *
-     * @param \model\Activity $activity
+     * @param \membersactivities\model\activities\Activity $activity
      *
-     * @return string The pass class ID: "{$issuerId}.{$classSuffix}"
      */
     public function updateClass(\membersactivities\model\activities\Activity $activity): void {
         $issuerId = _WALLETISSUERID;
@@ -284,7 +292,7 @@ abstract class GoogleWalletTicket {
      *    'classId': 'ISSUER_ID.CLASS_SUFFIX'
      *  }
      *
-     * @param string $id The payment ID being used for this request.
+     * @param int $id The payment ID being used for this request.
      *
      * @return string An "Add to Google Wallet" link.
      */
@@ -331,7 +339,7 @@ abstract class GoogleWalletTicket {
      * Returns the updated EventTicketClass as defined in the specific client project
      * 
      * @param EventTicketClass $class The Event Ticket in the Google API that needs to be updated
-     * @param \model\Activity $activity The updated activity that has the info to update the Event Ticket
+     * @param \membersactivities\model\activities\ $activity The updated activity that has the info to update the Event Ticket
      * @return EventTicketClass The updated Event Ticket
      */
     abstract protected function doUpdateClass(EventTicketClass $class, \membersactivities\model\activities\Activity $activity): EventTicketClass;

@@ -2,9 +2,9 @@
 /**
  * ActivityMapper.php
  *
- * @package model\activities
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\activities
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\activities;
@@ -37,14 +37,20 @@ abstract class ActivityMapper extends \controllerframework\db\Mapper {
     /**
      * Returns on the basis of a database row the associated object
      * 
-     * @param Array $row
-     * @return \model\Activity
+     * @param string $classname Name of the class
+     * @param array $row Database row
+     * @return Activity Returns the object found on the basis of database row
      */
     #[\Override]
-    protected function doCreateObject(string $classname, array $row): Activity {
+    protected function doCreateObject(string $classname, array $row):   Activity {
         return $classname::getInstance($row);
     }
     
+    /**
+     * Returns an ObjectMap of Activities that belongs to this Composite
+     * 
+     * @return ObjectMap of Activities
+     */
     public function getChildren(ActivityComposite $activitycomposite): ObjectMap {
         $result = $this->checkForChildren($activitycomposite->getId());
         
@@ -59,11 +65,11 @@ abstract class ActivityMapper extends \controllerframework\db\Mapper {
     /**
      * Returns the subscribed members of the Activity $obj
      * 
-     * @param \model\Activity $obj
-     * @param \db\ObjectMap $participants
-     * @return \db\ObjectMap of \members\Member
+     * @param Activity $obj
+     * @param ObjectMap $participants
+     * @return ObjectMap of Members
      */
-    public function getParticipants(Activity $obj, ObjectMap $participants) {
+    public function getParticipants(Activity $obj, ObjectMap $participants): ObjectMap {
         $sql = $this->db->prepare("SELECT DISTINCT member.id, name, email, costitem.description AS costitemdescription, quantity "
             . "FROM member, subscription, costitem, payment "
             . "WHERE member.id = subscription.member_id AND subscription.`costItem_id` = costitem.id "

@@ -2,9 +2,9 @@
 /**
  * CostItem.php
  *
- * @package model\activities
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\activities
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\activities;
@@ -26,7 +26,7 @@ abstract class Costitem extends \controllerframework\db\DomainObject {
      * Returns a CostItem object on the basis of a DB row.
      * 
      * @param arrary $row
-     * @return \model\activities\Costitem
+     * @return Costitem
      * @throws \Exception
      */
     #[\Override]
@@ -40,7 +40,7 @@ abstract class Costitem extends \controllerframework\db\DomainObject {
             try {
                 $activity = \model\Activity::find($row['activity_id']);            
             } catch (\Exception $exc) {
-                throw new \Exception("De activiteit voor Costitem met id " . $row['id']. " bestaat niet.");
+                throw new \Exception("The activity for this ostitem with id " . $row['id']. " does not exist.");
             }
             $costitem->activity = $activity;
         }

@@ -2,9 +2,9 @@
 /**
  * DefaultCommand.php
  *
- * @package commands
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\commands
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\commands;
@@ -21,7 +21,7 @@ class DefaultCommand extends \controllerframework\controllers\Command {
     /**
      * Concrete specialization of execute method in Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
      * @return int Returns status of the executed command
      */
     #[\Override]

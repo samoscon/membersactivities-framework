@@ -2,9 +2,9 @@
 /**
  * Subscription.php
  *
- * @package model/subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\subscriptions
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\subscriptions;

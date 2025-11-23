@@ -2,16 +2,15 @@
 /**
  * ActivityComposite.php
  *
- * @package model
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @package membersactivities\model\activities
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace membersactivities\model\activities;
 
 /**
  * Specific implementation of an Activity tree within client code
- * App
  *
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
@@ -32,7 +31,7 @@ class ActivityComposite extends Activity {
      * Based on design pattern 'Abstract Factory'
      * 
      * @param array $row
-     * @return \model\activities\Activity
+     * @return Activity
      */
     #[\Override]
     public static function getInstance(array $row): Activity {
@@ -45,6 +44,11 @@ class ActivityComposite extends Activity {
         return $activity;        
     }
 
+    /**
+     * Returns an ObjectMap of Activities that belongs to this Composite
+     * 
+     * @return ObjectMap of Activities
+     */
     public function getChildren(): \controllerframework\db\ObjectMap {
         if(!$this->children->valid()) {
             $this->setChildren();
@@ -52,10 +56,19 @@ class ActivityComposite extends Activity {
         return $this->children;
     }
     
+    /**
+     * Set the childeren variable with an ObjectMap of Activities
+     * 
+    */
     private function setChildren(): void {
         $this->children =  self::mapper()->getChildren($this);
     }
 
+    /**
+     * Returns the fact that this Composite is a composite.
+     * 
+     * @return boolean Always true
+     */
     #[\Override]
     public function isComposite(): bool {
         return true;
@@ -66,6 +79,8 @@ class ActivityComposite extends Activity {
      * traverses recursively through all its children, collecting and summing
      * their results. Since the composite's children pass these calls to their
      * children and so forth, the whole object tree is traversed as a result.
+     * 
+     * @return boolean If one of the childeren's subscription period is over, return true.
      */
     #[\Override]
     public function subscriptionPeriodOver(): bool {
