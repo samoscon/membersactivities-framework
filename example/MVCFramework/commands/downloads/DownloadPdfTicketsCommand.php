@@ -3,8 +3,8 @@
  * Specialization of a Command
  *
  * @package commands\user
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace commands\downloads;
@@ -18,6 +18,12 @@ require_once './vendor/setasign/fpdf/fpdf.php';
 class DownloadPdfTicketsCommand extends \controllerframework\controllers\Command {
     //put your code here
     
+    /**
+     * Specialization of the execute method of Command
+     * 
+     * @param \controllerframework\registry\Request $request
+     * @return int Status
+     */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
         // Instantiation of inherited class
@@ -105,6 +111,9 @@ class DownloadPdfTicketsCommand extends \controllerframework\controllers\Command
         return self::CMD_DEFAULT;        
     }
     
+    /**
+     * Specialization of getLevelOfLoginRequired
+     */
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
         $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());        
