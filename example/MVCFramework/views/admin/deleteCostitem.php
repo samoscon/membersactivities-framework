@@ -1,6 +1,5 @@
 <?php
     $costitem = $request->get('costitem');
-    $subscriptionsExisting = $request->get('subscriptionsExisting');
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +17,7 @@
         </div>
         <div class="container mt-3">                
             <p class="text-danger">                    
-                <?= $subscriptionsExisting ?
+                <?= $costitem->subscriptionsExisting ?
                     'Let op, verwijderen van een kostelement is niet toegelaten als er nog inschrijvingen voor dit kostelement zijn.' :
                     'Ben je zeker dat je kostelement wil verwijderen ?'?>
             </p>
@@ -32,7 +31,7 @@
                         <b>Prijs: </b><?=$costitem->price?>
                     </p>
                 </div>                    
-                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $subscriptionsExisting ? ' disabled="true"': '';?>>
+                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $costitem->subscriptionsExisting ? ' disabled="true"': '';?>>
                     Verwijder
                 </button>                   
             </form>                
