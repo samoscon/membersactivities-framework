@@ -1,6 +1,5 @@
 <?php
     $member = $request->get('member');
-    $subscriptionsExisting = $request->get('subscriptionsExisting');
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,13 +17,13 @@
         </div>
         <div class="container mt-3">                
             <p class="text-danger">                    
-                <?= $subscriptionsExisting ?
+                <?= $member->subscriptionsExisting ?
                     'Let op, verwijderen van een member is niet toegelaten als er nog inschrijvingen zijn.' :
                     'Ben je zeker dat je '. $member->name .' - '. $member->email . ' wil verwijderen ?'?>
             </p>
                 
             <form name="deleteMember" method="POST">                    
-                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $subscriptionsExisting ? ' disabled="true"': '';?>>
+                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $member->subscriptionsExisting ? ' disabled="true"': '';?>>
                     Verwijder
                 </button>                   
             </form>                

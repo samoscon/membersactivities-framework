@@ -1,6 +1,5 @@
 <?php
     $activity = $request->get('activity');
-    $costitemsExisting = $request->get('costitemsExisting');
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +17,7 @@
         </div>
         <div class="container mt-3">                
             <p class="text-danger">                    
-                <?= $costitemsExisting ?
+                <?= $activity->costitemsExisting ?
                     'Let op, verwijderen van een activiteit is niet toegelaten als er nog kostelementen zijn.' :
                     'Ben je zeker dat je deze activiteit wil verwijderen ?'?>
             </p>
@@ -29,7 +28,7 @@
                         <b>Omschrijving: </b><?=$activity->date .' - '. $activity->description?>
                     </p>
                 </div>                    
-                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $costitemsExisting ? ' disabled="true"': '';?>>
+                <button type="submit" class="btn btn-dark btn-block mt-4" <?= $activity->costitemsExisting ? ' disabled="true"': '';?>>
                     Verwijder
                 </button>                   
             </form>                
