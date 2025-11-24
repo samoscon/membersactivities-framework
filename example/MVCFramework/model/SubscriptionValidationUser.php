@@ -3,8 +3,8 @@
  * SubscriptionValidationUser.php
  *
  * @package subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace model;
@@ -18,13 +18,13 @@ namespace model;
 class SubscriptionValidationUser extends \membersactivities\model\subscriptions\SubscriptionValidationStrategy {
     
     /**
-     * Checks subscription for MMC when subscription is executed by a User
+     * Checks subscription when subscription is executed by a User
      * 
-     * @param \members\Member $member
-     * @param \model\activities\Costitem $subscribableitem
+     * @param \controllerframework\members\Member $member
+     * @param \membersactivities\model\activities\Costitem $subscribableitem
      * @return array Format: 'errorcode' => int and 'description' => string
      */
-    public function doCheckSubscription(\membersactivities\model\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
+    public function doCheckSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
          if($subscribableitem->activity->subscriptionPeriodOver()) {
             return $this->errorcode(100, 'Inschrijving of annuleren is jammer genoeg niet langer mogelijk.');
         }

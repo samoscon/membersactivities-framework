@@ -3,8 +3,8 @@
  * Member_RGLR.php
  *
  * @package model
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace model;
@@ -20,7 +20,7 @@ class Member_RGLR extends \controllerframework\members\MemberTypeImplementation 
     /**
      * Returns yearly participation fee for this type of Member
      * 
-     * @param \model\members\Member $member Member object
+     * @param \model\Member $member Member object
      * @return int
      */
     public function getYearlyParticipationFee(\model\Member  $member): int {

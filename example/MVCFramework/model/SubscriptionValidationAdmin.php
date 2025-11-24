@@ -3,8 +3,8 @@
  * SubscriptionValidationAdmin.php
  *
  * @package subscriptions
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace model;
@@ -20,8 +20,8 @@ class SubscriptionValidationAdmin extends SubscriptionValidationUser {
     /**
      * Checks subscription for MMC when subscription is executed by an admin User
      * 
-     * @param \model\Member $member
-     * @param \model\activities\Costitem $subscribableitem
+     * @param \controllerframework\model\Member $member
+     * @param \membersactivities\model\activities\Costitem $subscribableitem
      * @return array Format: 'errorcode' => int and 'description' => string
      */
     public function doCheckSubscription(\controllerframework\members\Member $member, \membersactivities\model\activities\Costitem $subscribableitem): array {
