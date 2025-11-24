@@ -3,8 +3,8 @@
  * Specialization of a Command
  *
  * @package commands\mollie
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace commands\mollie;
@@ -19,22 +19,16 @@ class PaymentToMollieCommand extends \membersactivities\commands\mollie\PaymentT
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
+     * @param \controllerframework\registry\Request $request
+     * @return ?int Status or null
      */
     #[\Override]
-    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {        
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): ?int {        
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
-        if($id) {        
-            try {
-                $payment = \model\Payment::find($id);
-            } catch (\Exception $exc) {
-                echo $exc->getMessage();
-            }
-        }
-
 
         $request->set('paymentConfirmation', 'paymentConfirmation');
         $request->set('orderDescription', APP." orderid=".$id);
+        return null;
     }
 
     

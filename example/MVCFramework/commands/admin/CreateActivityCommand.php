@@ -3,8 +3,8 @@
  * Specialization of a Command
  *
  * @package commands\admin
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace commands\admin;
@@ -19,16 +19,17 @@ class CreateActivityCommand extends \controllerframework\controllers\CommandDeco
     /**
      * Specialization of the execute method of Command
      * 
-     * @param \registry\Request $request
-     * @return int
+     * @param \controllerframework\registry\Request $request
+     * @return ?int
      */
     #[\Override]
-    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): ?int {
         /** Put your code here.  */
         $this->addResponses($request, [
-            'title' => 'Nieuw concert', //Contains the title on top of view
-            'placeholderTitle' => 'Titel van het concert' //Placeholder in Title activity
+            'title' => 'New Activity', //Contains the title on top of view
+            'placeholderTitle' => 'Title of the activity' //Placeholder in Title activity
             ]); 
+            return null;
     }
 
     /**

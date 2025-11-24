@@ -3,8 +3,8 @@
  * Specialization of a Command
  *
  * @package commands\user
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace commands\user;
@@ -16,12 +16,18 @@ namespace commands\user;
  */
 class ActivityCommand extends \controllerframework\controllers\CommandDecorator {
 
+    /**
+     * Specialization of the execute method of Command
+     * 
+     * @param \controllerframework\registry\Request $request
+     * @return ?int Status or null
+     */
     #[\Override]
-    public function doExecuteDecorator(\controllerframework\registry\Request $request): void {
-        /** Put your code here. */
+    public function doExecuteDecorator(\controllerframework\registry\Request $request): ?int {
+        /** Put your code here.  */
         $this->addResponses($request, [
             'validator' => '\model\SubscriptionValidationUser']);
-        
+        return null;
     }
     
     /**
