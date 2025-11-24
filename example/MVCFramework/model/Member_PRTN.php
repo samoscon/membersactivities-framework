@@ -3,8 +3,8 @@
  * Member_PRTN.php
  *
  * @package model
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace model;
@@ -23,7 +23,7 @@ class Member_PRTN extends \controllerframework\members\MemberTypeImplementation 
      * When the partner of the member is also a member, 
      * the first paying member of the 2 partners will pay 350, the second 325.
      * 
-     * @param model\members\Member $member Member object
+     * @param model\Member $member Member object
      * @return int
      */
     #[\Override]

@@ -3,8 +3,8 @@
  * GoogleWalletTicket.php
  *
  * @package model
- * @version 4.0
- * @copyright (c) 2024, Dirk Van Meirvenne
+ * @version 1.0
+ * @copyright (c) 2025, Dirk Van Meirvenne
  * @author Dirk Van Meirvenne <van.meirvenne.dirk at gmail.com>
  */
 namespace model;
@@ -24,7 +24,7 @@ class GoogleWalletTicket extends \membersactivities\model\wallet\GoogleWalletTic
      * Returns the updated EventTicketClass as defined in the specific client project
      * 
      * @param EventTicketClass $class The Event Ticket in the Google API that needs to be updated
-     * @param \model\Activity $activity The updated activity that has the info to update the Event Ticket
+     * @param \membersactivities\model\Activity $activity The updated activity that has the info to update the Event Ticket
      * @return EventTicketClass The updated Event Ticket
      */
     #[\Override]
