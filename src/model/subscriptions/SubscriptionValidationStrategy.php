@@ -51,11 +51,11 @@ abstract class SubscriptionValidationStrategy implements \controllerframework\au
         $subscription = \model\Subscription::insert($properties);
                 
 //        $this->notifyAuditTrace(__FUNCTION__, func_get_args());
-        $q = $properties['quantity'];
-        $this->notifyAuditTrace(__FUNCTION__, [
-            $member->name .' '. $member->lastname, 
-            " subscribes $subscription->quantity times for ".
-            $subscribableitem->description]);
+//        $q = $properties['quantity'];
+//        $this->notifyAuditTrace(__FUNCTION__, [
+//            $member->name .' '. $member->lastname, 
+//            " subscribes $subscription->quantity times for ".
+//            $subscribableitem->description]);
         return $check;
     }
     

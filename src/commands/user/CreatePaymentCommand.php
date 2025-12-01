@@ -35,7 +35,8 @@ class CreatePaymentCommand extends \controllerframework\controllers\Command {
         try {
             $payment = \model\Payment::find($orderid);
 
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
+            $request->addFeedback("Payment not found");
             return self::CMD_ERROR;
         }
         
