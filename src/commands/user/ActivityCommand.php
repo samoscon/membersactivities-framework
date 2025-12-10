@@ -62,7 +62,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
         //related costitems
         $costitems = array();
         foreach (\model\Costitem::findAll('WHERE activity_id = '. $activity->getId()) as $costitem) {
-            $costitem->description = "$costitem->description ($costitem->price EUR)";
+            $costitem->descriptionWithPrice = "$costitem->description ($costitem->price EUR)";
             $costitems[] = $costitem;
         }
         $activity->costitems = $costitems;
@@ -115,6 +115,8 @@ class ActivityCommand extends \controllerframework\controllers\Command {
 
             foreach ($costitems as $costitem) {
                 $propertiesSubscription['quantity'] = $quantity = filter_var($request->get($costitem->getId()), FILTER_VALIDATE_INT);
+                $reservedSeats = $costitem->getId().'Seats';
+                $propertiesSubscription['remark'] = $request->get($reservedSeats);
                 $propertiesSubscription['costitem_id'] = $costitem->getId();
                 $propertiesSubscription['payment_id'] = $orderid;
 
