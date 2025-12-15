@@ -88,6 +88,9 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
 
             $properties['location'] = $location = $request->get('location');
             $responses['locationIsEmpty'] = $locationIsEmpty = $location ? false : true;
+            
+            $seatmap = $request->get('seatmap');
+            $properties['classification'] = $seatmap ? 'STMP' : 'RGLR';
 
             $properties['start'] = $start = substr($request->get('start') ?? '',0,5);
             $properties['end'] = $start = substr($request->get('end') ?? '',0,5);
