@@ -19,4 +19,7 @@ namespace membersactivities\model\activities;
  */
 abstract class ActivityTypeImplementation {
     //put your code here
+    public function seatmap(): bool {
+        return false;
+    }
 }
