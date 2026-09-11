@@ -44,4 +44,24 @@ abstract class SubscriptionMapper extends \controllerframework\db\Mapper {
     protected function doCreateObject(string $classname, array $row): \model\Subscription {
         return $classname::getInstance($row);
     }   
+
+    /**
+     * Fields that are allowed for Subscription.
+     * 
+     * @return array List of fields that are allowed
+     */
+    protected function getAllowedFields(): array
+    {
+        return array_merge(
+            parent::getAllowedFields(),
+            [
+                'member_id',
+                'costitem_id',
+                'payment_id',
+                'quantity',
+                'remark'
+            ]
+        );
+    }
+    
 }        

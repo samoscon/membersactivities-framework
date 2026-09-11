@@ -47,6 +47,26 @@ abstract class ActivityMapper extends \controllerframework\db\Mapper {
     }
     
     /**
+     * Fields that are allowed for Activity.
+     * 
+     * @return array List of fields that are allowed
+     */
+    protected function getAllowedFields(): array
+    {
+        return array_merge(
+            parent::getAllowedFields(),
+            [
+                'date',
+                'duedate',
+                'longdescription',
+                'start',
+                'end',
+                'location'
+            ]
+        );
+    }
+    
+    /**
      * Returns an ObjectMap of Activities that belongs to this Composite
      * 
      * @return ObjectMap of Activities
