@@ -43,4 +43,22 @@ abstract class CostitemMapper extends \controllerframework\db\Mapper  {
     protected function doCreateObject(string $classname, array $row): \model\Costitem {
         return $classname::getInstance($row);
     }
+
+    /**
+     * Fields that are allowed for Costitem.
+     * 
+     * @return array List of fields that are allowed
+     */
+    protected function getAllowedFields(): array
+    {
+        return array_merge(
+            parent::getAllowedFields(),
+            [
+                'price',
+                'type',
+                'activity_id'
+            ]
+        );
+    }
+    
 }
