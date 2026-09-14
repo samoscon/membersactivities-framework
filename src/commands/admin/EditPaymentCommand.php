@@ -49,7 +49,7 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
             if (!false) {
                 $payment->update($properties);
                 
-                $payment->paymenttypeimplementation->statusReceived($payment, '', $status);
+                $payment->statusReceived($status);
                 $request->set('forwardqueryparams', ['id' => $payment->member_id]);
                 return self::CMD_OK;
             }
