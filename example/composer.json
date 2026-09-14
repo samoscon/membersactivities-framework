@@ -1,0 +1,29 @@
+{
+    "name": "samoscon/base",
+    "description": "Description of the project.",
+    "authors": [
+        {
+            "name": "dirk",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "setasign/fpdf": "^1.8",
+        "blueimp/jquery-file-upload": "9.22.*",
+        "tinymce/tinymce": "^8.0",
+        "chillerlan/php-qrcode": "*",
+        "samoscon/membersactivities-framework": "1.0.28",
+        "google/auth": "^1.53",
+        "guzzlehttp/guzzle": "^7.10",
+        "google/apiclient": "^2.19",
+        "google/apiclient-services": "~0.350"
+    },
+    "scripts": {
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+        "Walletobjects"
+        ]
+    }
+}
