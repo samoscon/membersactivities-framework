@@ -18,7 +18,7 @@
   ],
   "require": {
     "php": "^8.3",
-    "samoscon/controller-framework": "^1.0.30",
+    "samoscon/controller-framework": "^1.0.31",
     "mollie/mollie-api-php": "^2.0"
   },
   "autoload": {
