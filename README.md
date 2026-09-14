@@ -1,8 +1,8 @@
-# MembersActivities Framework 1.0.28
+# MembersActivities Framework
 
 The **MembersActivities Framework** is an application framework built on top of the **Controller Framework**. It provides reusable functionality for applications that manage members, activities, subscriptions, cost items, payments and related processes.
 
-Version **1.0.28** is based on the current generation of the Controller Framework and is intended for use with PHP 8.3 and MySQL/MariaDB.
+Version **1.0.29** is based on the current generation of the Controller Framework and is intended for use with PHP 8.3 and MySQL/MariaDB.
 
 ---
 
@@ -11,7 +11,7 @@ Version **1.0.28** is based on the current generation of the Controller Framewor
 The framework is structured as follows:
 
 ```text
-MembersActivities Framework 1.0.28
+MembersActivities Framework
         │
         ├── PHP 8.3
         │
@@ -171,7 +171,7 @@ samoscon/controller-framework 1.0.31
 The MembersActivities Framework version for this release is:
 
 ```text
-samoscon/membersactivities-framework 1.0.28
+samoscon/membersactivities-framework 1.0.29
 ```
 
 Run:
@@ -215,7 +215,7 @@ The framework should not depend on the current working directory when resolving 
 
 # 7. Controller Framework
 
-MembersActivities Framework 1.0.28 requires:
+MembersActivities Framework 1.0.29 requires:
 
 ```text
 Controller Framework 1.0.31
@@ -385,7 +385,7 @@ PHP 8.3
 Controller Framework 1.0.31
         │
         ▼
-MembersActivities Framework 1.0.28
+MembersActivities Framework 1.0.29
         │
         ▼
 MySQL / MariaDB
@@ -429,7 +429,7 @@ For a new client application, the recommended procedure is:
 1. Create application
         │
         ▼
-2. Install MembersActivities Framework 1.0.28
+2. Install MembersActivities Framework 1.0.29
         │
         ▼
 3. Install Controller Framework 1.0.31
@@ -469,7 +469,7 @@ The client application can then extend the framework with application-specific c
 This README applies to:
 
 ```text
-MembersActivities Framework 1.0.28
+MembersActivities Framework 1.0.29
 ```
 
 Required Controller Framework:
@@ -478,9 +478,9 @@ Required Controller Framework:
 Controller Framework 1.0.31
 ```
 
-The 1.0.28 release follows the previous 1.0.27 release.
+The 1.0.29 release follows the previous 1.0.27 release.
 
-The 1.0.27 release was created as an intermediate release following a packaging/Packagist issue during the release process. The version number 1.0.28 therefore represents the next regular MembersActivities Framework release after that intermediate release.
+The 1.0.27 and 1.0.28 release was created as an intermediate release following a packaging/Packagist issue during the release process. The version number 1.0.29 therefore represents the next regular MembersActivities Framework release after that intermediate release.
 
 Controller Framework 1.0.31 is required because the current MembersActivities Framework uses the `AccessToken` functionality introduced in that release.
 
@@ -513,7 +513,7 @@ The current MembersActivities Framework is based on the following technology sta
 
 ```text
 ┌──────────────────────────────────────────────┐
-│       MembersActivities Framework 1.0.28    │
+│       MembersActivities Framework 1.0.29    │
 ├──────────────────────────────────────────────┤
 │ PHP 8.3                                      │
 │ Controller Framework 1.0.31                  │
