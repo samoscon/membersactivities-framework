@@ -81,6 +81,10 @@ abstract class Payment extends \controllerframework\db\DomainObject {
      * @param string $status The status as received from the payment system or as provided by the User
      */
     public function statusReceived(string $status): void {
-        $this->paymenttypeimplementation->statusReceived($this, $status);
+        $accessToken = \controllerframework\security\AccessToken::generate(
+            'mollie-order',
+            (string) $this->getId()
+        );
+        $this->paymenttypeimplementation->statusReceived($this, $accessToken, $status);
     }
 }

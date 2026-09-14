@@ -51,13 +51,8 @@ class WebhookFromMollieCommand extends \controllerframework\controllers\Command 
                 return self::CMD_ERROR;
             }
 
-            $accessToken = \controllerframework\security\AccessToken::generate(
-                'mollie-order',
-                (string)$order_id
-            );
-
             $pmt->update(array('status' => $payment->status));
-            $pmt->paymenttypeimplementation->statusReceived($pmt, $accessToken, $payment->status);
+            $pmt->statusReceived($payment->status);
             return self::CMD_DEFAULT;
         }
         catch (\Mollie\Api\Exceptions\ApiException $e)
