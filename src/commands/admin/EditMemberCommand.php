@@ -68,6 +68,7 @@ class EditMemberCommand extends \controllerframework\controllers\Command {
         } 
             
         /** the page was requested via the GET method or the POST method did not return a status. */
+        $responses['csrf_token'] = $this->getCsrfToken();
         $responses['member'] = $member;        
         $responses['potentialParents'] = $potentialParents;
         $responses['returnpath'] = 'searchMembers';        
@@ -79,7 +80,7 @@ class EditMemberCommand extends \controllerframework\controllers\Command {
      * Specialization of getLevelOfLoginRequired
      */
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 
 }

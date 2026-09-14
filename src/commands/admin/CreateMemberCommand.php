@@ -32,6 +32,12 @@ class CreateMemberCommand extends \controllerframework\controllers\Command {
         
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
+            
             $properties['name'] = $name = filter_var($request->get('name'), FILTER_UNSAFE_RAW);
             $nameIsEmpty = $name ? false : true;
                        
@@ -49,6 +55,7 @@ class CreateMemberCommand extends \controllerframework\controllers\Command {
         
         /** the page was requested via the GET method or the POST method did not return a status. */
         $this->addResponses($request, [
+            'csrf_token' => $this->getCsrfToken(),
             'nameIsEmpty' => $nameIsEmpty,
             'emailIsEmpty' => $emailIsEmpty,
             'emailAlreadyExists' => $emailAlreadyExists,

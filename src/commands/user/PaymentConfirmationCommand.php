@@ -24,7 +24,27 @@ class PaymentConfirmationCommand extends \controllerframework\controllers\Comman
      */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {        
-        $id = filter_var($request->get('order_id'), FILTER_VALIDATE_INT)/171963;
+        $extendedOrderId = filter_var($request->get('order_id'), FILTER_VALIDATE_INT);
+
+        if ($extendedOrderId === false || $extendedOrderId <= 0 || $extendedOrderId % 171963 !== 0) {
+            $request->addFeedback($request->get('feedbackPaymentNotFound'));
+            return self::CMD_ERROR;
+        }
+
+        $id = intdiv($extendedOrderId, 171963);
+
+        $token = $request->get('access_token');
+
+        if (!is_string($token) ||
+            !\controllerframework\security\AccessToken::validate(
+                'mollie-order',
+                (string)$id,
+                $token
+            )
+        ) {
+            $request->addFeedback($request->get('feedbackPaymentNotFound'));
+            return self::CMD_ERROR;
+        }
 
         try {
             $payment = \model\Payment::find($id); 
@@ -42,6 +62,7 @@ class PaymentConfirmationCommand extends \controllerframework\controllers\Comman
 
         $responses['payment'] = $payment;
         $responses['activity'] = $activity;
+        $responses['access_token'] = $token;
         
         $this->addResponses($request, $responses);
         return self::CMD_DEFAULT;

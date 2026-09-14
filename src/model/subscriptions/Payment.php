@@ -49,11 +49,21 @@ abstract class Payment extends \controllerframework\db\DomainObject {
      * 
      */
     public function delete(): void {
-        //delete first all related subscriptions
-        foreach (\model\Subscription::findAll('WHERE payment_id = '.$this->getId()) as $subscription) {
-            $subscription->delete();
+        $reg = \controllerframework\registry\Registry::Instance();
+        $db = $reg->getDb();
+        $db->beginTransaction();
+
+        try {
+            //delete first all related subscriptions
+            foreach (\model\Subscription::findAll('WHERE payment_id = '.$this->getId()) as $subscription) {
+                $subscription->delete();
+            }
+            self::mapper()->delete($this);
+            $db->commit();
+        } catch (\Throwable $ex) {
+            $db->rollBack();
+            throw $ex;
         }
-        self::mapper()->delete($this);
     }
 
     /**

@@ -49,7 +49,7 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
             if (!false) {
                 $payment->update($properties);
                 
-                $payment->paymenttypeimplementation->statusReceived($payment, $status);
+                $payment->paymenttypeimplementation->statusReceived($payment, '', $status);
                 $request->set('forwardqueryparams', ['id' => $payment->member_id]);
                 return self::CMD_OK;
             }
@@ -67,7 +67,7 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
      * Specialization of getLevelOfLoginRequired
      */
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 
 }

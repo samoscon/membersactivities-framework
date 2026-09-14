@@ -9,6 +9,8 @@
  */
 namespace membersactivities\commands\downloads;
 
+use controllerframework\security\AccessToken;
+
 /**
  * Specialization of a Command
  *
@@ -25,10 +27,26 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
+        $token = ($request->get('token'));
+
+        if (
+            $id === false ||
+            $token === '' ||
+            !AccessToken::validate(
+                'participants',
+                $id,
+                $token
+            )
+        ) {
+            $request->addFeedback("Wrong ID / token combination");
+            return self::CMD_ERROR;
+        }
+
         try {
             $activity = \model\Activity::find($id);
         } catch (\Exception $exc) {
-            echo $exc->getTraceAsString();
+            $request->addFeedback("Unable to retrieve the activity");
+            return self::CMD_ERROR;
         }
 
         $participants = $activity->getParticipants();

@@ -46,8 +46,18 @@ class WebhookFromMollieCommand extends \controllerframework\controllers\Command 
              * Update the order in the database.
              */
             $pmt = \model\Payment::find($order_id);
+
+            if ($pmt === null) {
+                return self::CMD_ERROR;
+            }
+
+            $accessToken = \controllerframework\security\AccessToken::generate(
+                'mollie-order',
+                (string)$order_id
+            );
+
             $pmt->update(array('status' => $payment->status));
-            $pmt->paymenttypeimplementation->statusReceived($pmt, $payment->status);
+            $pmt->paymenttypeimplementation->statusReceived($pmt, $accessToken, $payment->status);
             return self::CMD_DEFAULT;
         }
         catch (\Mollie\Api\Exceptions\ApiException $e)

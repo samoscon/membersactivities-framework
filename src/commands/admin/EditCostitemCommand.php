@@ -76,7 +76,7 @@ class EditCostitemCommand extends \controllerframework\controllers\Command {
      * Specialization of getLevelOfLoginRequired
      */
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 
 }

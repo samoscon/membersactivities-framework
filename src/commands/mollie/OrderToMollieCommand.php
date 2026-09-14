@@ -41,7 +41,27 @@ class OrderToMollieCommand extends \controllerframework\controllers\Command {
              * in the redirectUrl (below) so a proper return page can be shown to the customer.
              */
             $orderid = filter_var($request->get('id'), FILTER_VALIDATE_INT);
-            $extendedOrderid = $orderid * 171963;
+            if (!$orderid) {
+                $request->set('errorcode', 'wrongID');
+                $request->addFeedback("Wrong ID");
+                return self::CMD_ERROR;
+            }
+            $extendedorderid = $orderid * 171963;
+
+            $accessToken = $request->get('access_token');
+
+            if (!is_string($accessToken) ||
+                !\controllerframework\security\AccessToken::validate(
+                    'mollie-order',
+                    (string) $orderid,
+                    $accessToken
+                )
+            ) {
+                $request->set('errorcode', 'InvalidAccessToken');
+                return self::CMD_ERROR;
+            }
+
+
             $paymentconfirmation = $request->get('paymentConfirmation');
             $paymentwebhook = "webhookFromMollie";
 
@@ -60,13 +80,27 @@ class OrderToMollieCommand extends \controllerframework\controllers\Command {
              *   webhookUrl    Webhook location, used to report when the payment changes state.
              *   metadata      Custom metadata that is stored with the payment.
              */
-            $value = $request->get('amount');
+            $pmt = \model\Payment::find($orderid);
+
+            if ($pmt === null) {
+                $request->set('errorcode', 'wrongID');
+                $request->addFeedback("Wrong ID");
+                return self::CMD_ERROR;
+            }
+
+            $value = number_format(
+                (float) $pmt->amount,
+                2,
+                '.',
+                ''
+            );
+            
             $payment = $mollie->payments->create(array(
                     'amount'       => [
                                         'currency' => "EUR",
                                         'value' => $value,],
                     'description'  => $request->get('orderDescription'),
-                    'redirectUrl'  => "{$protocol}://{$hostname}{$path}{$paymentconfirmation}?order_id={$extendedOrderid}&chk=BM*171963",
+                    'redirectUrl'  => "{$protocol}://{$hostname}{$path}{$paymentconfirmation}?order_id={$extendedorderid}&access_token={$accessToken}",
                     'webhookUrl'   => "{$protocol}://{$hostname}{$path}{$paymentwebhook}",
                     'metadata'     => array('order_id' => $orderid),
             ));
@@ -74,7 +108,7 @@ class OrderToMollieCommand extends \controllerframework\controllers\Command {
             /*
              * Store the order with its payment status in a database.
              */
-            \model\Payment::find($orderid)->update(['status' => $payment->status]);
+            $pmt->update(['status' => $payment->status]);
 
             /*
              * Send the customer off to complete the payment.
@@ -82,7 +116,8 @@ class OrderToMollieCommand extends \controllerframework\controllers\Command {
             $request->set('results', $payment->getCheckoutUrl());
             return self::CMD_DEFAULT;
         } catch (\Mollie\Api\Exceptions\ApiException $e) {
-           echo "API call failed: " . htmlspecialchars($e->getMessage());
+           $request->addFeedback("Mollie API call failed: " . htmlspecialchars($e->getMessage()));
+           return self::CMD_ERROR;
         }
     }
 

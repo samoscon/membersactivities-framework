@@ -24,27 +24,38 @@ class RemoveMemberFromCompositeCommand extends \controllerframework\controllers\
      */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
-        /** Variables */
-        $properties =array();
-        
-        $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
-        if(!$id) {
-            $request->addFeedback("Geen correct id opgegeven.");
+        /** Check that the page was requested via POST. */
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $request->set('errorcode', 'InvalidRequestMethod');
             return self::CMD_ERROR;
         }
-        
+
+        /** Validate CSRF token before processing anything. */
+        if (!$this->validateCsrfToken($request)) {
+            $request->set('errorcode', 'InvalidCsrfToken');
+            return self::CMD_ERROR;
+        }
+
+        /** Variables */
+        $properties = array();
+
+        $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
+        if (!$id) {
+            $request->set('errorcode', 'wrongID');
+            $request->addFeedback("Wrong ID");
+            return self::CMD_ERROR;
+        }
+
         try {
             $member = \model\Member::find($id);
         } catch (\Exception $exc) {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
-        }        
-
+        }
 
         $properties['parent_id'] = 0;
-
+            
         $member->update($properties);
-
         $request->set('forwardqueryparams', ['id' => $id]);
         return self::CMD_OK;
     }
