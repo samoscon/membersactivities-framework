@@ -24,8 +24,11 @@ class CreatePaymentCommand extends \controllerframework\controllers\Command {
      */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
+        // CSRF requires an active session.
+        $this->reg->getLoginManager();
+        
         /** variables */
-        $orderid = $request->get('id')/171963;
+        $orderid = $request->get('id');
         if(!$orderid) {
             $request->set('errorcode', 'wrongID');
             $request->addFeedback("Wrong ID");
@@ -44,10 +47,20 @@ class CreatePaymentCommand extends \controllerframework\controllers\Command {
         
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
+            
             $choice = $request->get('paymentmethod');
             
             if ($choice == "online") {   
-            	$request->set('forwardqueryparams', array('id' => $orderid, 'amount' => $payment->amount));            
+                $accessToken = \controllerframework\security\AccessToken::generate(
+                    'mollie-order',
+                    (string) $orderid
+                );
+                $request->set('forwardqueryparams', array('id' => $orderid, 'access_token' => $accessToken));            
                 return self::CMD_OK;
             } else {
                 return self::CMD_CONTINUE;            
@@ -56,6 +69,7 @@ class CreatePaymentCommand extends \controllerframework\controllers\Command {
         
         /** the page was requested via the GET method or the POST method did not return a status. */
         $this->addResponses($request, [
+            'csrf_token' => $this->getCsrfToken(),
             'payment' => $payment
         ]);
         return self::CMD_DEFAULT;

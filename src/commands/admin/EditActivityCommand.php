@@ -9,6 +9,8 @@
  */
 namespace membersactivities\commands\admin;
 
+use controllerframework\security\AccessToken;
+
 /**
  * Specialization of a Command
  *
@@ -49,6 +51,14 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
         }
+        
+        $token = AccessToken::generate(
+            'participants',
+            (string) $id
+        );
+        $responses['token'] = urlencode($token);
+
+        
                 
         //related costitems
         $costitems = array();
@@ -72,6 +82,12 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
+            
             $dateIsEmpty = $duedateIsEmpty = $locationIsEmpty = $startIsEmpty = $endIsEmpty = false;
 
             $date = strtotime(str_replace("/", "-", $request->get('date')));
@@ -108,6 +124,7 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
         } 
             
         /** the page was requested via the GET method or the POST method did not return a status. */
+        $responses['csrf_token'] = $this->getCsrfToken();
         $responses['activity'] = $activity;
         $responses['potentialParents'] = $potentialParents;
         $responses['returnpath'] = 'admin';
@@ -120,6 +137,6 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
      * Specialization of getLevelOfLoginRequired
      */
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 }

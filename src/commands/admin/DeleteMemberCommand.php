@@ -41,6 +41,12 @@ class DeleteMemberCommand extends \controllerframework\controllers\Command {
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
+            
             try {
                 $member->delete();
             } catch (\Exception $exc) {
@@ -53,6 +59,7 @@ class DeleteMemberCommand extends \controllerframework\controllers\Command {
 
         /** the page was requested via the GET method or the POST method did not return a status. */
         $responses = array();
+        $responses['csrf_token'] = $this->getCsrfToken();
         $responses['member'] = $member;
         $responses['returnpath'] = 'searchMembers';
         

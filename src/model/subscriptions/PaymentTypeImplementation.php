@@ -38,15 +38,17 @@ abstract class PaymentTypeImplementation {
     }
         
     /**
-     * Return the first subscription that is linked to this payment. Often used to find the underlying activity related to this payment
+     * Return the first subscription that is linked to this payment. Often used to find the underlying activity related 
+     * to this payment. This takes the assumption that all the subscriptions linked to 1 payment are also all linked to the same activity.
      * 
      * @param \model\Payment $payment The payment that received the new status
      * @return \model\Subscription The first subscription linked to this payment that was found in the database
      */
-    public function getSubscription(\model\Payment $payment): \model\Subscription {
+    public function getSubscription(\model\Payment $payment): ?\model\Subscription {
         foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
             return $subscription;
-        }        
+        }
+        return null;
     }
 
     /**
@@ -55,5 +57,5 @@ abstract class PaymentTypeImplementation {
      * @param \model\Payment $payment The payment that received the new status
      * @param string $status The status as received from the payment system or as provided by the User
      */
-    abstract public function statusReceived(\model\Payment $payment, string $status): void;
+    abstract public function statusReceived(\model\Payment $payment, string $accessToken, string $status): void;
 }

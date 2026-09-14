@@ -24,6 +24,9 @@ class ActivityCommand extends \controllerframework\controllers\Command {
      */
     #[\Override]
     public function doExecute(\controllerframework\registry\Request $request): int {
+        // CSRF requires an active session.
+        $this->reg->getLoginManager();
+        
         /** Variables */
 
         $propertiesMember = array();
@@ -54,7 +57,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
         $activity->longdescription = $activity->longdescription ? trim($activity->longdescription) : '';
         $activity->start = $activity->start ? substr($activity->start,0,5) : '';
         $activity->end = substr($activity->end ?? '',0,5);
-        
+                
         if($activity->isComposite()) {
             $activity->children = $activity->getChildren();
         }
@@ -70,6 +73,12 @@ class ActivityCommand extends \controllerframework\controllers\Command {
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
+            
             if(_MINLEVELTOLOGIN === 'A') {
                 $propertiesMember['name'] = $name = filter_var($request->get('name'), FILTER_UNSAFE_RAW);
                 $responses['nameIsEmpty'] = $nameIsEmpty = $name ? false : true;
@@ -83,8 +92,13 @@ class ActivityCommand extends \controllerframework\controllers\Command {
             $quantityIsEmpty = $total ? false :true;
 
             if (!$nameIsEmpty && !$emailIsEmpty) {
-                $validatorName = $request->get('validator') ?? '\model\SubscriptionValidationUser';
-                $validator = new $validatorName;
+                $validator = $request->get('validator');
+
+                if (!$validator instanceof \membersactivities\model\subscriptions\SubscriptionValidationStrategy) {
+                    $request->set('errorcode', 'InvalidValidationStrategy');
+                    $request->addFeedback('Invalid validation strategy.');
+                    return self::CMD_ERROR;
+                }  
                 
                 if(_MINLEVELTOLOGIN === 'A') {               
                     $memberid = $this->reg->getLoginManager()->validateUsername($email);   
@@ -122,27 +136,28 @@ class ActivityCommand extends \controllerframework\controllers\Command {
 
                 if ($quantity) {
                     $check = $validator->subscribe($member, $costitem, $propertiesSubscription);
-                    if($check['errorcode']) {
+                   if($check['errorcode']) {
                         $request->addFeedback($check['description']);
                         return self::CMD_ERROR;
                     }                                       
                 }
             }
 
-            if ($total <= 0) {
-                $request->set('forwardqueryparams', array('order_id' => $orderid*171963, 'chk' => "BM*171963"));
+             if ($total <= 0) {
+                $request->set('forwardqueryparams', array('order_id' => $orderid));
                 return self::CMD_ADMIN;
             }
             if(_WTALLOWED === 'Y') {
-                $request->set('forwardqueryparams', array('id' => $orderid*171963, 'chk' => "BM*171963"));
+                $request->set('forwardqueryparams', array('id' => $orderid));
                 return self::CMD_OK;
             } else {
-                $request->set('forwardqueryparams', array('id' => $orderid, 'amount' => $total.'.00'));
+                $request->set('forwardqueryparams', array('id' => $orderid));
                 return self::CMD_CONTINUE;
             }
         } 
             
         /** the page was requested via the GET method or the POST method did not return a status. */
+        $responses['csrf_token'] = $this->getCsrfToken();
         $responses['activity'] = $activity;
         $responses['returnpath'] = 'admin';
         

@@ -23,43 +23,61 @@ class AddActivityToCompositeCommand extends \controllerframework\controllers\Com
      * @return int
      */
     #[\Override]
-    public function doExecute(\controllerframework\registry\Request $request): int {
+public function doExecute(\controllerframework\registry\Request $request): int
+    {
+        /** Check that the page was requested via POST. */
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $request->set('errorcode', 'InvalidRequestMethod');
+            return self::CMD_ERROR;
+        }
+
+        /** Validate CSRF token before processing anything. */
+        if (!$this->validateCsrfToken($request)) {
+            $request->set('errorcode', 'InvalidCsrfToken');
+            return self::CMD_ERROR;
+        }
+
         /** Variables */
-        $properties =array();
-        
+        $properties = array();
+
         $id = filter_var($request->get('id'), FILTER_VALIDATE_INT);
-        if(!$id) {
+        if (!$id) {
             $request->set('errorcode', 'wrongID');
             $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
-        
+
         try {
             $activity = \model\Activity::find($id);
         } catch (\Exception $exc) {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
-        }        
+        }
 
-        $parent_id = filter_var($request->get('parent_id'), FILTER_VALIDATE_INT);
-        if(!$parent_id) {
+        $parent_id = filter_var(
+            $request->get('parent_id'),
+            FILTER_VALIDATE_INT
+        );
+
+        if (!$parent_id) {
             $request->set('errorcode', 'wrongID');
             $request->addFeedback("Wrong ID");
             return self::CMD_ERROR;
         }
-        
+
         try {
-            $parentActivity = \model\Activity::find($parent_id);
+            \model\Activity::find($parent_id);
         } catch (\Exception $exc) {
             $request->addFeedback($exc->getMessage());
             return self::CMD_ERROR;
-        }        
+        }
 
         $properties['parent_id'] = $parent_id;
 
         $activity->update($properties);
 
         $request->set('forwardqueryparams', ['id' => $id]);
+
         return self::CMD_OK;
     }
 

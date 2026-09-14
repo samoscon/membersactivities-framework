@@ -40,6 +40,6 @@ class AdminHomeCommand extends \controllerframework\controllers\Command {
      */
     #[\Override]
     protected function getLevelOfLoginRequired(): void {
-        $this->setLoginLevel(new \controllerframework\sessions\NoLoginRequired());
+        $this->setLoginLevel(new \controllerframework\sessions\AdminLogin());
     }
 }
