@@ -17,6 +17,34 @@
     }
   ],
   "require": {
+    "php": "^8.3",
+    "samoscon/controller-framework": "^1.0.30",
+    "mollie/mollie-api-php": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "membersactivities\\": "src/"
+    }
+  }
+}{
+  "name": "samoscon/membersactivities-framework",
+  "description": "MVC Framework to manage Members, Activities and Subscriptions in a ticketingsystem",
+  "keywords": [
+    "members",
+    "payments",
+    "activities",
+    "costitems",
+    "subscriptions"
+  ],
+  "homepage": "https://ticketingsystem.link",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Dirk Van Meirvenne",
+      "email": "info@ticketingsystem.link"
+    }
+  ],
+  "require": {
       "samoscon/controller-framework": "^1.0",
       "mollie/mollie-api-php": "^2.0"
   },
