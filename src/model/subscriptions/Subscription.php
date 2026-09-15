@@ -21,7 +21,7 @@ abstract class Subscription extends \controllerframework\db\DomainObject {
      * 
      * Based on design pattern 'Builder'
      */
-    public ?SubscriptionTypeImplementation $subscriptiontypeimplementation;
+    public ?SubscriptionTypeImplementation $subscriptiontypeimplementation = null;
     
 
     /**

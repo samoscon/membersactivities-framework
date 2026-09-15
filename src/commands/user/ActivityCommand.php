@@ -48,8 +48,10 @@ class ActivityCommand extends \controllerframework\controllers\Command {
         
         try {
             $activity = \model\Activity::find($id);
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
 
@@ -107,14 +109,16 @@ class ActivityCommand extends \controllerframework\controllers\Command {
                         $propertiesMember['subscriptionuntil'] = '2099-12-31';
                         \model\Member::insert($propertiesMember); //Member is not found and should be created
                         $memberid = $this->reg->getLoginManager()->validateUsername($email);
-//                        $member = \model\Member::find($memberid);
                     }
                     try {
                         $member = \model\Member::find($memberid);
-                    } catch (\Exception $exc) {
-                        $request->addFeedback($exc->getMessage());
+                    } 
+                    catch (\Throwable $ex) {
+                        \controllerframework\error\ErrorHandler::handleException($ex);
+                        $request->addFeedback('Unable to retrieve the requested memberid in Member.');
                         return self::CMD_ERROR;
                     }
+
                     $member->update($propertiesMember);
                     $member->active = 1;
                     $member->subscriptionuntil = '2099-12-31';

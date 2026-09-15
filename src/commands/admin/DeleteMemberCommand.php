@@ -34,8 +34,10 @@ class DeleteMemberCommand extends \controllerframework\controllers\Command {
         try {
             $member = \model\Member::find($id);
             $member->subscriptionsExisting = \model\Subscription::findAll('WHERE member_id = '.$member->getId())->count() > 0;
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
 

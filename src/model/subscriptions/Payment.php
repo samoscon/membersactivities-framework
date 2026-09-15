@@ -22,7 +22,7 @@ abstract class Payment extends \controllerframework\db\DomainObject {
      * 
      * Based on design pattern 'Builder'
      */
-    public ?PaymentTypeImplementation $paymenttypeimplementation;
+    public ?PaymentTypeImplementation $paymenttypeimplementation = null;
     
     /**
      * Returns object instance of Payment

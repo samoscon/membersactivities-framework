@@ -20,7 +20,7 @@ abstract class PaymentMapper extends \controllerframework\db\Mapper {
      *
      * @var string Name of the associated table for Payment class 
      */
-    private $tablename = 'payment';
+    private string $tablename = 'payment';
 
     /**
      * Returns the table name

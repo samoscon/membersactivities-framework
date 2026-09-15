@@ -35,8 +35,10 @@ class DeleteCostitemCommand extends \controllerframework\controllers\Command {
             $costitem = \model\Costitem::find($id);
             $costitem->activity->date =date('d/m/Y', strtotime($costitem->activity->date));
             $costitem->subscriptionsExisting = \model\Subscription::findAll('WHERE costitem_id = '.$costitem->getId())->count() > 0;
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
         

@@ -47,11 +47,13 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
             if($activity->isComposite()) {
                 $activity->children = $activity->getChildren();
             }
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
-        
+
         $token = AccessToken::generate(
             'participants',
             (string) $id
@@ -78,7 +80,7 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
         }
         $activity->costitems = $costitems;
         
-        $potentialParents = \model\Activity::findAll("WHERE duedate > CURRENT_DATE AND parent_id <> {$id} AND id <> {$id} ORDER BY date");
+        $potentialParents = \model\Activity::findAll("WHERE duedate > CURRENT_DATE AND parent_id <> {$id} AND id <> {$id} ORDER BY date DESC");
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -95,12 +97,13 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
             $properties['date'] = date("Y-m-d", $date);
             
             $properties['description'] = $description = $request->get('description');
+            $responses['descriptionIsEmpty'] = $descriptionIsEmpty = $description ? false : true;
             
             $duedate = strtotime(str_replace("/", "-", $request->get('duedate')));
             $responses['duedateIsEmpty'] = $duedateIsEmpty = $duedate ? false : true;
             $properties['duedate'] = date("Y-m-d", $duedate);
             
-            $properties['longdescription'] = $longdescription = trim(str_replace("'", "\'", $request->get('longdescription')));
+            $properties['longdescription'] = $longdescription = trim($request->get('longdescription'));
 
             $properties['location'] = $location = $request->get('location');
             $responses['locationIsEmpty'] = $locationIsEmpty = $location ? false : true;
@@ -109,7 +112,9 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
             $properties['classification'] = $seatmap ? 'STMP' : 'RGLR';
 
             $properties['start'] = $start = substr($request->get('start') ?? '',0,5);
-            $properties['end'] = $start = substr($request->get('end') ?? '',0,5);
+            $responses['startIsEmpty'] = $startIsEmpty = $start ? false : true;
+            $properties['end'] = $end = substr($request->get('end') ?? '',0,5);
+            $responses['endIsEmpty'] = $endIsEmpty = $end ? false : true;
 
             if (!$dateIsEmpty && !$descriptionIsEmpty && !$duedateIsEmpty && !$startIsEmpty && !$endIsEmpty && !$locationIsEmpty) {
                 $updatedActivity = $activity->update($properties);

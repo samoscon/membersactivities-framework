@@ -38,10 +38,13 @@ class EditMemberCommand extends \controllerframework\controllers\Command {
         
         try {
             $member = \model\Member::find($id);
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
+
         if($member->isComposite()) {
             $member->children = $member->getChildren();
         }
@@ -55,6 +58,11 @@ class EditMemberCommand extends \controllerframework\controllers\Command {
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            /** Validate CSRF token before processing. */ 
+            if (!$this->validateCsrfToken($request)) { 
+                $request->set('errorcode', 'InvalidCsrfToken');
+                return self::CMD_ERROR;
+            }
             $properties['name'] = $name = filter_var($request->get('name'), FILTER_UNSAFE_RAW);
             $responses['nameIsEmpty'] = $nameIsEmpty = $name ? false : true;
             

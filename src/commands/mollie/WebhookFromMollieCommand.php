@@ -57,7 +57,7 @@ class WebhookFromMollieCommand extends \controllerframework\controllers\Command 
         }
         catch (\Mollie\Api\Exceptions\ApiException $e)
         {
-            $request->addFeedback("API call to mollie failed: " . htmlspecialchars($e->getMessage()));
+            \controllerframework\error\ErrorHandler::handleException($e);
             return self::CMD_ERROR;
         }
     }

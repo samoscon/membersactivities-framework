@@ -20,7 +20,7 @@ abstract class Activity extends \controllerframework\db\DomainObject {
      * 
      * Based on design pattern 'Builder'
      */
-    public ?ActivityTypeImplementation $activitytypeimplementation;
+    public ?ActivityTypeImplementation $activitytypeimplementation = null;
     
     public function __construct(int $id) {
         parent::__construct($id);
