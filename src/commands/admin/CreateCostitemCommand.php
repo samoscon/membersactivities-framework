@@ -38,8 +38,10 @@ class CreateCostitemCommand extends \controllerframework\controllers\Command {
         
         try {
             $activity = \model\Activity::find($activityid);
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
         

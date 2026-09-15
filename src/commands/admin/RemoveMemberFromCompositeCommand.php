@@ -48,8 +48,10 @@ class RemoveMemberFromCompositeCommand extends \controllerframework\controllers\
 
         try {
             $member = \model\Member::find($id);
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
 

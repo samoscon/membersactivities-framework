@@ -115,9 +115,11 @@ class OrderToMollieCommand extends \controllerframework\controllers\Command {
              */
             $request->set('results', $payment->getCheckoutUrl());
             return self::CMD_DEFAULT;
-        } catch (\Mollie\Api\Exceptions\ApiException $e) {
-           $request->addFeedback("Mollie API call failed: " . htmlspecialchars($e->getMessage()));
-           return self::CMD_ERROR;
+        } 
+        catch (\Mollie\Api\Exceptions\ApiException $e) {
+            \controllerframework\error\ErrorHandler::handleException($e);
+            $request->addFeedback('Unable to initiate your payment. Please try again later.');
+            return self::CMD_ERROR;
         }
     }
 

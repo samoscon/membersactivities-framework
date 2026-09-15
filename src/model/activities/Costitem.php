@@ -20,7 +20,7 @@ abstract class Costitem extends \controllerframework\db\DomainObject {
      * 
      * Based on design pattern 'Builder'
      */
-    public ?CostitemTypeImplementation $costitemtypeimplementation;
+    public ?CostitemTypeImplementation $costitemtypeimplementation = null;
     
     /**
      * Returns a CostItem object on the basis of a DB row.

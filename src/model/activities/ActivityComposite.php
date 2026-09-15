@@ -18,7 +18,7 @@ class ActivityComposite extends Activity {
     /**
      * @var \db\Objectmap $childeren
      */
-    protected $children;
+    protected \controllerframework\db\ObjectMap $children;
 
     public function __construct(int $id) {
         parent::__construct($id);

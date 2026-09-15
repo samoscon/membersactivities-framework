@@ -35,8 +35,10 @@ class DeleteActivityCommand extends \controllerframework\controllers\Command {
             $activity = \model\Activity::find($id);
             $activity->date = date('d/m/Y', strtotime($activity->date));
             $activity->costitemsExisting = \model\Costitem::findAll('WHERE activity_id = '.$activity->getId())->count() > 0;
-        } catch (\Exception $exc) {
-            $request->addFeedback($exc->getMessage());
+        } 
+        catch (\Throwable $ex) {
+            \controllerframework\error\ErrorHandler::handleException($ex);
+            $request->addFeedback('Unable to retrieve the requested item.');
             return self::CMD_ERROR;
         }
 
