@@ -9,7 +9,7 @@
 -- Intended environment:
 --   MariaDB 10.6+
 --   PHP 8.3+
---   Controller Framework 1.0.30+
+--   Controller Framework 1.0.31
 --
 -- Character set:
 --   utf8mb4
