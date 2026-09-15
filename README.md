@@ -478,9 +478,7 @@ Required Controller Framework:
 Controller Framework 1.0.31
 ```
 
-The 1.0.30 release follows the previous 1.0.27 release.
-
-The 1.0.27 1.0.28 and 1.0.29 release were created as an intermediate release following a packaging/Packagist issue during the release process. The version number 1.0.30 therefore represents the next regular MembersActivities Framework release after that intermediate release.
+The 1.0.30 release follows the previous 1.0.29 release.
 
 Controller Framework 1.0.31 is required because the current MembersActivities Framework uses the `AccessToken` functionality introduced in that release.
 
