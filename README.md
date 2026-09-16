@@ -4,6 +4,15 @@ The **MembersActivities Framework** is an application framework built on top of 
 
 Version **1.0.30** is based on the current generation of the Controller Framework and is intended for use with PHP 8.3 and MySQL/MariaDB.
 
+For a complete guide to developing a client application with the Members Activities Framework 1.0.30, see the **[Membersactivities Framework 1.0.30 — Client Application Developer Guide](https://samoscon.github.io/2026/09/16/membersactivities-Framework-Client-Application-Development-Guide.html)**.
+
+For a basic example application, see the **[Membersactivities Framework 1.0.30 — Basic Example Guide](https://samoscon.github.io/2026/09/12/membersactivities-Framework-Basic-Example.html)**.
+
+For a complete technical guidance, see the **[Membersactivities Framework 1.0.30 — Technical Guide](https://samoscon.github.io/2026/09/14/membersactivities-Framework-Technical-Guide.html)**.
+
+
+
+
 ---
 
 ## 1. Framework stack
