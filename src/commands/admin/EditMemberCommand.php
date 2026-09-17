@@ -54,7 +54,7 @@ class EditMemberCommand extends \controllerframework\controllers\Command {
             $payment->subscriptions = \model\Subscription::findAll('WHERE payment_id = '. $payment->getId());
         }
  
-        $potentialParents = \model\Member::findAll("WHERE parent_id <> {$id} AND id <> {$id} ORDER BY name");
+        $potentialParents = \model\Member::findAll("WHERE id <> {$id} ORDER BY name");
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
