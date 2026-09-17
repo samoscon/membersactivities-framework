@@ -2,13 +2,13 @@
 
 The **MembersActivities Framework** is an application framework built on top of the **Controller Framework**. It provides reusable functionality for applications that manage members, activities, subscriptions, cost items, payments and related processes.
 
-Version **1.0.30** is based on the current generation of the Controller Framework and is intended for use with PHP 8.3 and MySQL/MariaDB.
+Version **1.0.31** is based on the current generation of the Controller Framework and is intended for use with PHP 8.3 and MySQL/MariaDB.
 
-For a complete guide to developing a client application with the Members Activities Framework 1.0.30, see the **[Membersactivities Framework 1.0.30 — Client Application Developer Guide](https://samoscon.github.io/2026/09/16/membersactivities-Framework-Client-Application-Development-Guide.html)**.
+For a complete guide to developing a client application with the Members Activities Framework 1.0.31, see the **[Membersactivities Framework 1.0.31 — Client Application Developer Guide](https://samoscon.github.io/2026/09/16/membersactivities-Framework-Client-Application-Development-Guide.html)**.
 
-For a basic example application, see the **[Membersactivities Framework 1.0.30 — Basic Example Guide](https://samoscon.github.io/2026/09/12/membersactivities-Framework-Basic-Example.html)**.
+For a basic example application, see the **[Membersactivities Framework 1.0.31 — Basic Example Guide](https://samoscon.github.io/2026/09/12/membersactivities-Framework-Basic-Example.html)**.
 
-For a complete technical guidance, see the **[Membersactivities Framework 1.0.30 — Technical Guide](https://samoscon.github.io/2026/09/14/membersactivities-Framework-Technical-Guide.html)**.
+For a complete technical guidance, see the **[Membersactivities Framework 1.0.31 — Technical Guide](https://samoscon.github.io/2026/09/14/membersactivities-Framework-Technical-Guide.html)**.
 
 
 
@@ -180,7 +180,7 @@ samoscon/controller-framework 1.0.31
 The MembersActivities Framework version for this release is:
 
 ```text
-samoscon/membersactivities-framework 1.0.30
+samoscon/membersactivities-framework 1.0.31
 ```
 
 Run:
@@ -224,7 +224,7 @@ The framework should not depend on the current working directory when resolving 
 
 # 7. Controller Framework
 
-MembersActivities Framework 1.0.30 requires:
+MembersActivities Framework 1.0.31 requires:
 
 ```text
 Controller Framework 1.0.31
@@ -394,7 +394,7 @@ PHP 8.3
 Controller Framework 1.0.31
         │
         ▼
-MembersActivities Framework 1.0.30
+MembersActivities Framework 1.0.31
         │
         ▼
 MySQL / MariaDB
@@ -438,7 +438,7 @@ For a new client application, the recommended procedure is:
 1. Create application
         │
         ▼
-2. Install MembersActivities Framework 1.0.30
+2. Install MembersActivities Framework 1.0.31
         │
         ▼
 3. Install Controller Framework 1.0.31
@@ -478,7 +478,7 @@ The client application can then extend the framework with application-specific c
 This README applies to:
 
 ```text
-MembersActivities Framework 1.0.30
+MembersActivities Framework 1.0.31
 ```
 
 Required Controller Framework:
@@ -487,7 +487,7 @@ Required Controller Framework:
 Controller Framework 1.0.31
 ```
 
-The 1.0.30 release follows the previous 1.0.29 release.
+The 1.0.31 release follows the previous 1.0.30 release.
 
 Controller Framework 1.0.31 is required because the current MembersActivities Framework uses the `AccessToken` functionality introduced in that release.
 
@@ -520,7 +520,7 @@ The current MembersActivities Framework is based on the following technology sta
 
 ```text
 ┌──────────────────────────────────────────────┐
-│       MembersActivities Framework 1.0.30    │
+│       MembersActivities Framework 1.0.31    │
 ├──────────────────────────────────────────────┤
 │ PHP 8.3                                      │
 │ Controller Framework 1.0.31                  │
