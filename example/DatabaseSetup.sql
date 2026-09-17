@@ -47,7 +47,7 @@ CREATE TABLE `activity` (
     `description` VARCHAR(100) DEFAULT 'description',
     `classification` VARCHAR(4) NOT NULL DEFAULT 'RGLR',
     `parent_id` INT UNSIGNED DEFAULT NULL,
-    `date` DATE NOT NULL,
+    `date` DATE NOT NULL DEFAULT (CURRENT_DATE),
     `duedate` DATE DEFAULT NULL,
     `longdescription` VARCHAR(4000) DEFAULT NULL,
     `start` TIME NOT NULL DEFAULT '19:00:00',
