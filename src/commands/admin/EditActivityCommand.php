@@ -80,7 +80,7 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
         }
         $activity->costitems = $costitems;
         
-        $potentialParents = \model\Activity::findAll("WHERE duedate > CURRENT_DATE AND parent_id <> {$id} AND id <> {$id} ORDER BY date DESC");
+        $potentialParents = \model\Activity::findAll("WHERE duedate > CURRENT_DATE AND id <> {$id} ORDER BY date DESC");
 
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

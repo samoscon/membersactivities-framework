@@ -55,7 +55,7 @@ class RemoveMemberFromCompositeCommand extends \controllerframework\controllers\
             return self::CMD_ERROR;
         }
 
-        $properties['parent_id'] = 0;
+        $properties['parent_id'] = null;
             
         $member->update($properties);
         $request->set('forwardqueryparams', ['id' => $id]);

@@ -55,7 +55,7 @@ class RemoveActivityFromCompositeCommand extends \controllerframework\controller
             return self::CMD_ERROR;
         }
 
-        $properties['parent_id'] = 0;
+        $properties['parent_id'] = null;
             
         $activity->update($properties);
         $request->set('forwardqueryparams', ['id' => $id]);
