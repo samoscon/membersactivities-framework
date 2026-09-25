@@ -89,6 +89,22 @@ class ActivityCommand extends \controllerframework\controllers\Command {
             }
             $total = 0;
             foreach ($costitems as $costitem) {
+                if($request->get('seatmap')) {
+                    $seat = rtrim($request->get($costitem->getId().'Seats', true), ';');
+
+                    //check seat against reserved seats in related subscriptions
+                    foreach (\model\Subscription::findAll('WHERE costitem_id = '. $costitem->getId()) as $subscription) {
+
+                        foreach (explode(';', rtrim($subscription->remark,';')) as $reservedSeat) {
+
+                            if($seat && $seat === $reservedSeat) {
+                                $request->addFeedback('Sorry ! Your seats have been reserved in the meantime by somebody else. '
+                                        . '<a href="/activity?id='.$id.'">Please try again by clicking here</a>');
+                                return self::CMD_ERROR;
+                            }                        
+                        }
+                    }                    
+                }
                 $total += (filter_var($request->get($costitem->getId()), FILTER_VALIDATE_INT) * $costitem->price);
             }
             $quantityIsEmpty = $total ? false :true;
@@ -130,7 +146,7 @@ class ActivityCommand extends \controllerframework\controllers\Command {
             $propertiesPayment['amount'] = $total;
             $propertiesPayment['status'] = $total ? 'open' : 'paid';
             $orderid = \model\Payment::insert($propertiesPayment)->getId();
-
+            
             foreach ($costitems as $costitem) {
                 $propertiesSubscription['quantity'] = $quantity = filter_var($request->get($costitem->getId()), FILTER_VALIDATE_INT);
                 $reservedSeats = $costitem->getId().'Seats';

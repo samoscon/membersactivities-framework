@@ -59,6 +59,12 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
             (string) $id
         );
         $responses['token'] = urlencode($token);
+        
+        $wallettoken = AccessToken::generate(
+            'ticket_scan',
+            (string) $id
+        );
+        $responses['ticket_scantoken'] = urlencode($wallettoken);
 
         
                 

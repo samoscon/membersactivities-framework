@@ -264,9 +264,7 @@ abstract class GoogleWalletTicket
      * @param int $activityid
      *        The ID of the activity for which has been subscribed.
      * @param int $i
-     *        The ticket # (needed if quantity of subscription is > 1).
-     *        In this case multiple Ticket Objects for the same
-     *        subscription ID will be created.
+     *        The ticket id.
      *
      * @return string
      *         The pass object ID: "{$issuerId}.{$objectSuffix}"
@@ -309,11 +307,7 @@ abstract class GoogleWalletTicket
             'id' => $objectId,
             'classId' => "{$issuerId}.{$classSuffix}",
             'state' => 'ACTIVE',
-            'ticketNumber' => APP
-                . ' subscription# '
-                . $id
-                . ' Ticket# '
-                . $i
+            'ticketNumber' => $i
         ]);
 
         $response = $this->service->eventticketobject->insert(
@@ -409,10 +403,10 @@ abstract class GoogleWalletTicket
             $classSuffix = APP
                 . '_activityid_'
                 . $subscription->costitem->activity->getId();
-
-            for ($i = 0; $i < $subscription->quantity; $i++) {
-                $ticketNumber = $i + 1;
-
+            
+            foreach (\model\Ticket::findAll("WHERE subscription_id = ". $subscription->getId()) as $ticket) {
+                $ticketNumber = $ticket->getId();
+                
                 $objectSuffix = APP
                     . '_subscriptionid_'
                     . $subscription->getId()
