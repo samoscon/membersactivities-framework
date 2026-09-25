@@ -50,7 +50,7 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
                 $request->set('errorcode', 'InvalidCsrfToken');
                 return self::CMD_ERROR;
             }
-            $properties['status'] = $status = filter_var($request->get('status'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $status = filter_var($request->get('status'), FILTER_SANITIZE_FULL_SPECIAL_CHARS); //DO NOT update the status of the payment via the update but via the statusReceived !
             $properties['amount'] = $amount = filter_var($request->get('amount'), FILTER_VALIDATE_FLOAT);
 
             if ($status !== false && $amount !== false) {

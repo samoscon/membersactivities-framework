@@ -30,9 +30,9 @@ abstract class PaymentTypeImplementation {
             return;
         }
         foreach (\model\Subscription::findAll("WHERE payment_id = ".$payment->getId()) as $subscription) {
-            for($i = 0; $i < $subscription->quantity; $i++) {
-                (new \model\GoogleWalletTicket())->createObject($subscription->getId(), $activity->getId(), $i+1);
-                (new \model\GoogleWalletTicket())->updateObject($subscription, $i+1);
+            foreach (\model\Ticket::findAll("WHERE subscription_id = ". $subscription->getId()) as $ticket) {
+                (new \model\GoogleWalletTicket())->createObject($subscription->getId(), $activity->getId(), $ticket->getId());
+                (new \model\GoogleWalletTicket())->updateObject($subscription, $ticket->getId());
             }
         }        
     }
