@@ -255,6 +255,107 @@ CREATE TABLE `subscription` (
 
 
 -- ============================================================================
+-- TABLE: ticket
+-- ============================================================================
+--
+-- A ticket belongs to:
+--
+--   - one subscription
+--
+-- Multiple tickets can refer to one subscription depending on the quantity in subscription
+--
+-- ============================================================================
+CREATE TABLE `ticket` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+    `description` VARCHAR(100) DEFAULT 'TBD',
+
+    `classification` VARCHAR(4) NOT NULL DEFAULT 'RGLR',
+
+    `subscription_id` INT UNSIGNED,
+
+    `seat` CHAR(24) DEFAULT NULL,
+
+    `token` CHAR(64)
+        CHARACTER SET ascii
+        COLLATE ascii_bin,
+
+    `status` ENUM(
+        'valid',
+        'cancelled'
+    ) NOT NULL DEFAULT 'valid',
+
+    `used` TINYINT(1) NOT NULL DEFAULT 0,
+
+    `used_at` DATETIME DEFAULT NULL,
+
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (`id`),
+
+    UNIQUE KEY `uq_ticket_token` (`token`),
+
+    KEY `idx_ticket_subscription_id` (`subscription_id`),
+    KEY `idx_ticket_used` (`used`),
+
+    CONSTRAINT `fk_ticket_subscription`
+        FOREIGN KEY (`subscription_id`)
+        REFERENCES `subscription` (`id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+
+) ENGINE=InnoDB
+  DEFAULT CHARACTER SET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================================
+-- TABLE: ticket_scan
+-- ============================================================================
+--
+-- A ticket_scan belongs to:
+--
+--   - one ticket
+--
+-- ============================================================================
+
+CREATE TABLE `ticket_scan` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+    `description` VARCHAR(100) DEFAULT 'TBD',
+
+    `classification` VARCHAR(4) NOT NULL DEFAULT 'RGLR',
+
+    `ticket_id` INT UNSIGNED DEFAULT NULL,
+
+    `scanner` VARCHAR(100) DEFAULT NULL,
+
+    `scanned_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    `result` ENUM(
+        'valid',
+        'already_used',
+        'cancelled',
+        'invalid',
+        'wrong_activity'
+    ),
+
+    PRIMARY KEY (`id`),
+
+    KEY `idx_ticket_scan_ticket_id` (`ticket_id`),
+    KEY `idx_ticket_scan_scanned_at` (`scanned_at`),
+
+    CONSTRAINT `fk_ticket_scan_ticket`
+        FOREIGN KEY (`ticket_id`)
+        REFERENCES `ticket` (`id`)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+
+) ENGINE=InnoDB
+  DEFAULT CHARACTER SET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================================
 -- TABLE: remember_tokens
 -- ============================================================================
 --
@@ -279,7 +380,7 @@ CREATE TABLE `remember_tokens` (
         COLLATE ascii_bin
         NOT NULL,
 
-    `expires_at` DATETIME NOT NULL,
+    `expires_at` DATETIME DEFAULT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `last_used_at` DATETIME DEFAULT NULL,
 
@@ -317,9 +418,9 @@ CREATE TABLE `mail_queue` (
     `classification` VARCHAR(4) NOT NULL DEFAULT 'RGLR',
     `parent_id` INT UNSIGNED DEFAULT NULL,
 
-    `subject` VARCHAR(255) NOT NULL,
-    `body` MEDIUMTEXT NOT NULL,
-    `recipient` VARCHAR(254) NOT NULL,
+    `subject` VARCHAR(255) DEFAULT NULL,
+    `body` MEDIUMTEXT DEFAULT NULL,
+    `recipient` VARCHAR(254) DEFAULT NULL,
     `bcc` VARCHAR(1000) DEFAULT NULL,
 
     `status` ENUM(
