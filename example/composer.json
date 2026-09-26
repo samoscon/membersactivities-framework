@@ -12,7 +12,7 @@
         "blueimp/jquery-file-upload": "9.22.*",
         "tinymce/tinymce": "^8.0",
         "chillerlan/php-qrcode": "*",
-        "samoscon/membersactivities-framework": "^1.0.30",
+        "samoscon/membersactivities-framework": "^1.1.0",
         "google/auth": "^1.53",
         "guzzlehttp/guzzle": "^7.10",
         "google/apiclient": "^2.19",
