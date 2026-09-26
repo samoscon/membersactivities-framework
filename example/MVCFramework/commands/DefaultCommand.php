@@ -28,7 +28,7 @@ class DefaultCommand extends \controllerframework\controllers\CommandDecorator {
     public function doExecuteDecorator(\controllerframework\registry\Request $request): ?int {
         /** Put your code here. Following line are meant as an example */
         $this->addResponses($request, [
-            'title' => 'Inloggen']);
+            'title' => 'Example']);
         return null;
     }
     
