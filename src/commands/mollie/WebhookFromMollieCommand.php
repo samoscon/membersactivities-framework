@@ -51,7 +51,6 @@ class WebhookFromMollieCommand extends \controllerframework\controllers\Command 
                 return self::CMD_ERROR;
             }
 
-            $pmt->update(array('status' => $payment->status));
             $pmt->statusReceived($payment->status);
             return self::CMD_DEFAULT;
         }
