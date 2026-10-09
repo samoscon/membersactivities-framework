@@ -90,10 +90,10 @@ abstract class ActivityMapper extends \controllerframework\db\Mapper {
      * @return ObjectMap of Members
      */
     public function getParticipants(Activity $obj, ObjectMap $participants): ObjectMap {
-        $sql = $this->db->prepare("SELECT DISTINCT member.id, name, email, costitem.description AS costitemdescription, quantity "
+        $sql = $this->db->prepare("SELECT member.id, name, email, costitem.description AS costitemdescription, quantity "
             . "FROM member, subscription, costitem, payment "
             . "WHERE member.id = subscription.member_id AND subscription.`costItem_id` = costitem.id "
-            . "AND costitem.activity_id = ? AND status = 'paid' ORDER BY member.name, member.lastname");
+            . "AND costitem.activity_id = ? AND status = 'paid' AND subscription.payment_id = payment.id ORDER BY member.name, member.lastname");
         $sql->execute([$obj->getId()]);
         $result = $sql->fetchAll();
         $sql->closeCursor();
