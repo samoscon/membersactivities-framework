@@ -79,7 +79,7 @@ class EditActivityCommand extends \controllerframework\controllers\Command {
                 }
                 $subscriptions[] = $subscription;
             }
-            $costitem->description = "$costitem->description ($costitem->price EUR)";
+            $costitem->descriptionWithPrice = "$costitem->description ($costitem->price EUR)";
             $costitem->subscriptions = $subscriptions;
             $costitem->numberOfSubscriptions = $numberOfSubscriptions;
             $costitems[] = $costitem;

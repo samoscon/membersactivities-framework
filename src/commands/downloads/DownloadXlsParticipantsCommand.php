@@ -49,21 +49,67 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
             return self::CMD_ERROR;
         }
 
-        $participants = $activity->getParticipants();
-        $result = array();
-        foreach ($participants as $participant) {
-            $p = array();
-            $p[] = $participant->name;
-            $p[] = $participant->lastname <> 'lastname' ? $participant->lastname : '';
-            $p[] = $participant->email;
-            $p[] = $participant->costitem;
-            $p[] = $participant->quantity;
-            $result[] = $p;
+        $tickets = \model\Ticket::findAll(
+            'WHERE subscription_id IN (
+                SELECT s.id
+                FROM subscription s
+                INNER JOIN costitem c ON c.id = s.costitem_id
+                WHERE c.activity_id = ' . (int) $id . '
+            ) ORDER BY id'
+        );
+
+        $result = [];
+        $totalQuantity = 0;
+        $totalPrice = 0.0;
+
+        foreach ($tickets as $ticket) {
+            $subscription = $ticket->subscription;
+            $costitem = $subscription->costitem ?? null;
+            $member = $subscription->member ?? null;
+
+            $quantity = 1;
+            $price = (float) ($costitem->price ?? 0);
+
+            $row = [
+                'name' => trim($member->name ?? ''),
+                'mail' => trim($member->email ?? ''),
+                'costitem' => $costitem->description ?? '',
+                'quantity' => $quantity,
+                'price' => number_format($price, 2, '.', '')
+            ];
+
+            $result[] = $row;
+
+            // Totalen berekenen
+            $totalQuantity += $quantity;
+            $totalPrice += $price;
         }
-                
+
+        // Sorteren op naam
+        usort($result, static fn($a, $b) =>
+            strcasecmp($a['name'], $b['name'])
+        );
+
+        // Totalen toevoegen als laatste rij
+        $result[] = [
+            'name' => '',
+            'mail' => '',
+            'costitem' => 'TOTAAL',
+            'quantity' => $totalQuantity,
+            'price' => number_format($totalPrice, 2, '.', '')
+        ];
+
         $this->addResponses($request, [
             'filename' => $activity->date . '_Aanwezigheidslijst.csv',
-            'columnNames' => 'name; lastname; mail; subscription; quantity',
+            'columnNames' => 'name; mail; subscription; quantity; price',
+            'results' => $result
+        ]);
+
+        return self::CMD_DEFAULT;     
+
+        $this->addResponses($request, [
+            'filename' => $activity->date . '_Aanwezigheidslijst.csv',
+            'columnNames' => 'name; mail; subscription; quantity; price',
             'results' => $result
         ]);
          return self::CMD_DEFAULT;
