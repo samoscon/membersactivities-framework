@@ -43,6 +43,14 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
             return self::CMD_ERROR;
         }
 
+        if ($payment->status === 'paid') {
+            $request->addFeedback(
+                'This order has been paid and can not be cancelled.'
+            );
+
+            return self::CMD_ERROR;
+        }
+        
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             /** Validate CSRF token before processing. */ 
@@ -57,7 +65,6 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
                 $payment->update($properties);
                 
                 $payment->statusReceived($status);
-                $request->set('forwardqueryparams', ['id' => $payment->member_id]);
                 return self::CMD_OK;
             }
         } 
@@ -65,7 +72,6 @@ class EditPaymentCommand extends \controllerframework\controllers\Command {
         /** the page was requested via the GET method or the POST method did not return a status. */
         $responses['csrf_token'] = $this->getCsrfToken();
         $responses['payment'] = $payment;        
-        $responses['returnpath'] = 'editMember?id='.$payment->member_id;
         
         $this->addResponses($request, $responses);
         return self::CMD_DEFAULT;
