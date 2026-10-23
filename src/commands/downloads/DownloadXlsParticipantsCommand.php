@@ -68,7 +68,7 @@ class DownloadXlsParticipantsCommand extends \controllerframework\controllers\Co
             $member = $subscription->member ?? null;
 
             $quantity = 1;
-            $price = (float) ($costitem->price ?? 0);
+            $price = $ticket->subscription->payment->amount <> '0.00' ? (float) ($costitem->price ?? 0) : (float) 0;
 
             $row = [
                 'name' => trim($member->name ?? ''),
